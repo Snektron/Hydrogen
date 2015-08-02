@@ -1,10 +1,10 @@
-package hydrogen.frontend.parser;
+package hydrogen.frontend.tokenparser;
 
 import hydrogen.Strings;
 import hydrogen.frontend.error.ParseError;
 import hydrogen.vcode.VirtualCode;
 
-public class UnexpectedTokenParser implements IParser
+public class UnexpectedTokenParser implements ITokenParser
 {
 	@Override
 	public void parse(VirtualCode vcode)

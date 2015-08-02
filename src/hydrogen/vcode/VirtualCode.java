@@ -2,8 +2,8 @@ package hydrogen.vcode;
 
 import java.util.ArrayList;
 
-import hydrogen.frontend.tokenizer.Token;
-import hydrogen.frontend.tokenizer.Tokenizer;
+import hydrogen.frontend.token.Token;
+import hydrogen.frontend.token.Tokenizer;
 import hydrogen.vcode.instruction.Instruction;
 import hydrogen.vcode.variable.DataType;
 import hydrogen.vcode.variable.LocationType;

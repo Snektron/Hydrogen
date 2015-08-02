@@ -1,4 +1,4 @@
-package hydrogen.frontend.tokenizer;
+package hydrogen.frontend.token;
 
 import java.io.IOException;
 import java.util.regex.Matcher;

@@ -1,4 +1,4 @@
-package hydrogen.frontend.tokenizer;
+package hydrogen.frontend.token;
 
 import hydrogen.vcode.VirtualCode;
 
@@ -21,5 +21,10 @@ public class Token
 	public void parse(VirtualCode vcode)
 	{
 		token.parser.parse(vcode);
+	}
+	
+	public boolean is(EToken other)
+	{
+		return token == other;
 	}
 }

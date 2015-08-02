@@ -1,8 +1,8 @@
-package hydrogen.frontend.parser;
+package hydrogen.frontend.tokenparser;
 
 import hydrogen.vcode.VirtualCode;
 
-public interface IParser
+public interface ITokenParser
 {
 	public void parse(VirtualCode vcode);
 }

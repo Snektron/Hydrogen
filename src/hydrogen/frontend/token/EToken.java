@@ -1,40 +1,43 @@
-package hydrogen.frontend.tokenizer;
+package hydrogen.frontend.token;
 
 import java.util.regex.Pattern;
 
-import hydrogen.frontend.parser.IParser;
-import hydrogen.frontend.parser.UnexpectedTokenParser;
+import hydrogen.frontend.tokenparser.AssignmentParser;
+import hydrogen.frontend.tokenparser.ITokenParser;
+import hydrogen.frontend.tokenparser.UnexpectedTokenParser;
 import hydrogen.vcode.variable.DataType;
 
 public enum EToken
 {	
-	BOOLEAN(Util.BOOLEAN, null),
-	RETURN(Util.keyword("return"), null),
-	IF("if\\s*\\(", null),
-	ELSE(Util.keyword("else"), null),
-	END(Util.keyword("end"), null),
-	BRACKET_OPEN("\\(", null),
-	BRACKET_CLOSE("\\)", null),
-	FUNCTION_DEFINE(Util.getReturnTypes() + "\\s*" + Util.NAME + "\\s*\\(", null),
-	CALL(Util.NAME + "\\s*\\(", null),
-	OPERATOR(Util.OPERATOR, null),
-	FLOAT(Util.FLOAT, null),
-	INTEGER(Util.INT, null),
-	VARIABLE_DEFINE(Util.getModifierTypes() + "\\s*" + Util.NAME + "\\s*=[^=]", null),
-	ASSIGNMENT(Util.NAME + "\\s*=[^=]", null),
-	VARIABLE(Util.NAME, null),
-	ARGUMENT_SEPERATOR(",", null);
+	BOOLEAN(Util.BOOLEAN, null, true),
+	RETURN(Util.keyword("return"), null, false),
+	IF("if\\s*\\(", null, false),
+	ELSE(Util.keyword("else"), null, false),
+	END(Util.keyword("end"), null, false),
+	BRACKET_OPEN("\\(", null, true),
+	BRACKET_CLOSE("\\)", null, true),
+	FUNCTION_DEFINE(Util.getReturnTypes() + "\\s*" + Util.NAME + "\\s*\\(", null, false),
+	CALL(Util.NAME + "\\s*\\(", null, true),
+	OPERATOR(Util.OPERATOR, null, true),
+	FLOAT(Util.FLOAT, null, true),
+	INTEGER(Util.INT, null, true),
+	VARIABLE_DEFINE(Util.getModifierTypes() + "\\s*" + Util.NAME + "\\s*=[^=]", new AssignmentParser(), false),
+	ASSIGNMENT(Util.NAME + "\\s*=[^=]", new AssignmentParser(), false),
+	VARIABLE(Util.NAME, null, true),
+	ARGUMENT_SEPERATOR(",", null, false);
 	
 	Pattern pattern;
-	IParser parser;
+	ITokenParser parser;
+	boolean allowInExpr;
 	
-	EToken(String regex, IParser parser)
+	EToken(String regex, ITokenParser parser, boolean allowInExpr)
 	{
 		pattern = Pattern.compile("^("+regex+")");
 		if (parser == null)
 			this.parser = new UnexpectedTokenParser();
 		else
 			this.parser = parser;
+		this.allowInExpr = allowInExpr;
 	}
 	
 	static class Util

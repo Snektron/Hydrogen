@@ -2,7 +2,7 @@ package hydrogen.frontend.parser;
 
 import hydrogen.Log;
 import hydrogen.Strings;
-import hydrogen.frontend.tokenizer.Tokenizer;
+import hydrogen.frontend.token.Tokenizer;
 import hydrogen.vcode.VirtualCode;
 import hydrogen.vcode.instruction.Instruction;
 
@@ -20,7 +20,7 @@ public class Parser
 	
 	public static void parseNext(VirtualCode vcode)
 	{
-		Log.d(vcode.nextToken().name());
+		Log.d("Parsing "+vcode.nextToken().name());
 		vcode.currentToken().parse(vcode);
 	}
 	

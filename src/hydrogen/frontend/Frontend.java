@@ -3,7 +3,7 @@ package hydrogen.frontend;
 import java.io.IOException;
 
 import hydrogen.frontend.parser.Parser;
-import hydrogen.frontend.tokenizer.Tokenizer;
+import hydrogen.frontend.token.Tokenizer;
 import hydrogen.vcode.VirtualCode;
 
 public class Frontend

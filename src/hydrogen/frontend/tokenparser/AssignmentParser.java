@@ -8,6 +8,7 @@ public class AssignmentParser implements ITokenParser
 	@Override
 	public void parse(VirtualCode vcode)
 	{
+		//TODO
 		ExpressionParser.parse(vcode);
 	}
 }

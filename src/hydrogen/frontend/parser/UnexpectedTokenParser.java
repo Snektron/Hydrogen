@@ -1,7 +1,7 @@
 package hydrogen.frontend.parser;
 
 import hydrogen.Strings;
-import hydrogen.frontent.error.ParseError;
+import hydrogen.frontend.error.ParseError;
 import hydrogen.vcode.VirtualCode;
 
 public class UnexpectedTokenParser implements IParser

@@ -3,7 +3,7 @@ package hydrogen;
 import java.io.IOException;
 
 import hydrogen.frontend.Frontend;
-import hydrogen.frontent.error.HydrogenError;
+import hydrogen.frontend.error.HydrogenError;
 
 public class Hydrogen
 {

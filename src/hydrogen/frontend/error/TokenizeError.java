@@ -1,4 +1,4 @@
-package hydrogen.frontent.error;
+package hydrogen.frontend.error;
 
 public class TokenizeError extends HydrogenError
 {

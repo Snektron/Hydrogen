@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import hydrogen.FileReader;
 import hydrogen.Strings;
-import hydrogen.frontent.error.TokenizeError;
+import hydrogen.frontend.error.TokenizeError;
 
 public class Tokenizer
 {	

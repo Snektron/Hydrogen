@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import hydrogen.frontend.token.Token;
 import hydrogen.frontend.token.Tokenizer;
-import hydrogen.vcode.instruction.Instruction;
+import hydrogen.vcode.instruction.IInstruction;
 import hydrogen.vcode.variable.DataType;
 import hydrogen.vcode.variable.LocationType;
 import hydrogen.vcode.variable.Variable;
@@ -14,7 +14,7 @@ public class VirtualCode
 {
 	Token currentToken;
 	Tokenizer tokenizer;
-	public ArrayList<Instruction> vcode;
+	public ArrayList<IInstruction> vcode;
 	public ArrayList<Variable> variables;
 	public VariableAllocator valloc;
 	public int depth;
@@ -22,7 +22,7 @@ public class VirtualCode
 	public VirtualCode(Tokenizer t)
 	{
 		this.tokenizer = t;
-		vcode = new ArrayList<Instruction>();
+		vcode = new ArrayList<IInstruction>();
 		variables = new ArrayList<Variable>();
 		depth = 0;
 	}
@@ -45,8 +45,18 @@ public class VirtualCode
 	
 	public int registerVariable(DataType dataType, String base, String name)
 	{
-		Variable v = new Variable(base == null ? LocationType.GLOBAL : LocationType.LOCAL, dataType, name, valloc.getLoc(base, depth));
+		Variable v = new Variable(base == null ? LocationType.GLOBAL : LocationType.LOCAL, dataType, base, name, valloc.getLoc(base, depth));
 		variables.add(v);
 		return variables.size()-1;
+	}
+	
+	public int getVariable(String base, String name)
+	{
+		Variable v;
+		
+		for (int i=0; i<variables.size(); i++)
+		{
+			v = variables.get(i);
+		}
 	}
 }

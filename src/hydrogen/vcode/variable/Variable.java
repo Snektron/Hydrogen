@@ -4,7 +4,7 @@ public class Variable
 {
 	LocationType locType;
 	DataType dataType;
-	String name;
+	String base, name;
 	int location;
 	
 	/**
@@ -15,10 +15,11 @@ public class Variable
 	 *  The location on the stack relative to the function it is in.
 	 */
 	
-	public Variable(LocationType locType, DataType dataType, String name, int location)
+	public Variable(LocationType locType, DataType dataType, String base, String name, int location)
 	{
 		this.locType = locType;
 		this.dataType = dataType;
+		this.base = base;
 		this.name = name;
 		this.location = location;
 	}

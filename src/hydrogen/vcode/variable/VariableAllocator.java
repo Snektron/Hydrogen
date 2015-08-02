@@ -10,37 +10,48 @@ import hydrogen.frontend.error.UnresolvedVariableError;
 
 public class VariableAllocator
 {
-	int blockIDCounter;
-	Stack<Block> blocks;
 	public ArrayList<Variable> variables;
+	boolean inFunction;
+	
+	int blockIDCounter;
+	
+	Stack<Block> globalBlocks;
+	Stack<Block> localBlocks;
 	
 	public VariableAllocator()
 	{
 		variables = new ArrayList<Variable>();
+		inFunction = false;
+		
 		blockIDCounter = 0;
-		blocks = new Stack<Block>();
-		blocks.push(new Block());
+		
+		globalBlocks = new Stack<Block>();
+		globalBlocks.push(new Block(0));
+		localBlocks = new Stack<Block>();
+	}
+	
+	public void openFunction()
+	{
+		inFunction = true;
+		localBlocks.empty();
+		localBlocks.push(new Block(0));
+	}
+	
+	public void closeFunction()
+	{
+		inFunction = false;
 	}
 	
 	// increase block depth
 	public void blockOpen()
 	{
-		blocks.push(new Block());
+		getBlocks().push(new Block(getBlocks().peek().startLocation));
 	}
 	
 	// decrease block depth
 	public void blockClose()
 	{
-		blocks.pop();
-	}
-	
-	public int register(EDataType dataType, String name)
-	{
-		if (isReachable(name))
-			throw new RedefinitionError(Strings.DUPLICATE_VARIABLE.f(name));
-		
-		variables.add(new Variable(dataType, name, blocks.peek().id, blocks.peek().nextLocation()));
-		return variables.size()-1;
+		getBlocks().pop();
 	}
 	
 	public boolean isReachable(String name)
@@ -53,11 +64,26 @@ public class VariableAllocator
 		if (var == null)
 			return false;
 		
-		for (Block block : blocks)
+		for (Block block : getBlocks())
 			if (var.blockID == block.id)
 				return true;
 		
 		return false;
+	}
+	
+	public int register(EDataType dataType, String name)
+	{
+		if (isReachable(name))
+			throw new RedefinitionError(Strings.DUPLICATE_VARIABLE.f(name));
+		
+		ELocationType locationType = inFunction ? ELocationType.GLOBAL : ELocationType.LOCAL;
+		variables.add(new Variable(locationType, dataType, name, getBlocks().peek().id, getBlocks().peek().nextLocation()));
+		return variables.size()-1;
+	}
+	
+	public Stack<Block> getBlocks()
+	{
+		return inFunction ? localBlocks : globalBlocks;
 	}
 	
 	public int getByName(String name)
@@ -83,17 +109,16 @@ public class VariableAllocator
 	
 	private class Block
 	{
-		public int id, location;
+		public int id, startLocation;
 		
-		public Block()
+		public Block(int startLocation)
 		{
 			id = nextID();
-			location = 0;
 		}
 		
-		private int nextLocation()
+		public int nextLocation()
 		{
-			return location++;
+			return startLocation++;
 		}
 	}
 }

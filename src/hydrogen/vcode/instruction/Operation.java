@@ -2,7 +2,7 @@ package hydrogen.vcode.instruction;
 
 import hydrogen.frontend.token.EOperator;
 
-public class Operator implements IInstruction
+public class Operation implements IInstruction
 {
 	/**
 	 * This instruction is an operator, and will execute the operator.
@@ -10,7 +10,7 @@ public class Operator implements IInstruction
 	
 	public EOperator operator;
 	
-	public Operator(EOperator operator)
+	public Operation(EOperator operator)
 	{
 		this.operator = operator;
 	}

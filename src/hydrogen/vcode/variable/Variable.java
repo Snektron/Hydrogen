@@ -2,25 +2,15 @@ package hydrogen.vcode.variable;
 
 public class Variable
 {
-	LocationType locType;
-	DataType dataType;
-	String base, name;
-	int location;
-	
-	/**
-	 * Variable class
-	 * @param name
-	 *  The name of the variable.
-	 * @param location
-	 *  The location on the stack relative to the function it is in.
-	 */
-	
-	public Variable(LocationType locType, DataType dataType, String base, String name, int location)
+	public EDataType dataType;
+	public String name;
+	public int blockID, location;
+
+	public Variable(EDataType dataType, String name, int blockID, int location)
 	{
-		this.locType = locType;
 		this.dataType = dataType;
-		this.base = base;
 		this.name = name;
+		this.blockID = blockID;
 		this.location = location;
 	}
 }

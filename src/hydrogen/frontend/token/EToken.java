@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import hydrogen.frontend.tokenparser.AssignmentParser;
 import hydrogen.frontend.tokenparser.ITokenParser;
 import hydrogen.frontend.tokenparser.UnexpectedTokenParser;
-import hydrogen.vcode.variable.DataType;
+import hydrogen.vcode.variable.EDataType;
 
 public enum EToken
 {	
@@ -23,6 +23,7 @@ public enum EToken
 	INTEGER(Util.INT, null, true),
 	VARIABLE_DEFINE(Util.getModifierTypes() + "\\s*" + Util.NAME + "\\s*=[^=]", new AssignmentParser(), false),
 	ASSIGNMENT(Util.NAME + "\\s*=[^=]", new AssignmentParser(), false),
+	PARAMETER_DEFINE(Util.getModifierTypes() + "\\s*" + Util.NAME, null, true),
 	VARIABLE(Util.NAME, null, true),
 	ARGUMENT_SEPERATOR(",", null, false);
 	
@@ -51,17 +52,17 @@ public enum EToken
 		public static String getModifierTypes()
 		{
 			StringBuilder sb = new StringBuilder(")");
-			for (int i=0; i<DataType.values().length; i++)
-				if (!DataType.values()[i].returnOnly)
-					sb.insert(0, DataType.values()[i].syntax).insert(0, "|");
+			for (int i=0; i<EDataType.values().length; i++)
+				if (!EDataType.values()[i].returnOnly)
+					sb.insert(0, EDataType.values()[i].syntax).insert(0, "|");
 			return "(" + sb.substring(1).toString();
 		}
 		
 		public static String getReturnTypes()
 		{
 			StringBuilder sb = new StringBuilder(")");
-			for (int i=0; i<DataType.values().length; i++)
-				sb.insert(0, DataType.values()[i].syntax).insert(0, "|");
+			for (int i=0; i<EDataType.values().length; i++)
+				sb.insert(0, EDataType.values()[i].syntax).insert(0, "|");
 			return "(" + sb.substring(1).toString();
 		}
 		
@@ -70,7 +71,6 @@ public enum EToken
 			StringBuilder sb = new StringBuilder(")");
 			for (int i=0; i<EOperator.values().length; i++)
 				sb.insert(0, EOperator.values()[i].regex).insert(0, "|");
-			System.out.println("(" + sb.substring(1).toString());
 			return "(" + sb.substring(1).toString();
 		}
 		

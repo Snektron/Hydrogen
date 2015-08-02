@@ -7,6 +7,7 @@ import hydrogen.frontend.error.HydrogenError;
 
 public class Hydrogen
 {
+	
 	public static void compile(String file)
 	{
 		try {

@@ -1,44 +1,99 @@
 package hydrogen.vcode.variable;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Stack;
+
+import hydrogen.Strings;
+import hydrogen.frontend.error.ParseError;
+import hydrogen.frontend.error.RedefinitionError;
+import hydrogen.frontend.error.UnresolvedVariableError;
 
 public class VariableAllocator
 {
-	// list holding the number of variables in a function.
-	HashMap<String, Stack<Integer>> vars;
+	int blockIDCounter;
+	Stack<Block> blocks;
+	public ArrayList<Variable> variables;
 	
 	public VariableAllocator()
 	{
-		vars = new HashMap<String, Stack<Integer>>();
+		variables = new ArrayList<Variable>();
+		blockIDCounter = 0;
+		blocks = new Stack<Block>();
+		blocks.push(new Block());
 	}
 	
-	/**
-	 * Get a location for a variable
-	 * @param base
-	 *  The function the variable is in. If null, variable is global
-	 * @param depth
-	 * 	The block depth
-	 * @return
-	 *  The location
-	 */
-	
-	public int getLoc(String base, int depth)
+	// increase block depth
+	public void blockOpen()
 	{
-		if (!vars.containsKey(base))
+		blocks.push(new Block());
+	}
+	
+	// decrease block depth
+	public void blockClose()
+	{
+		blocks.pop();
+	}
+	
+	public int register(EDataType dataType, String name)
+	{
+		if (isReachable(name))
+			throw new RedefinitionError(Strings.DUPLICATE_VARIABLE.f(name));
+		
+		variables.add(new Variable(dataType, name, blocks.peek().id, blocks.peek().nextLocation()));
+		return variables.size()-1;
+	}
+	
+	public boolean isReachable(String name)
+	{
+		Variable var = null;
+		for (Variable v:variables)
+			if (v.name.equals(name))
+				var = v;
+		
+		if (var == null)
+			return false;
+		
+		for (Block block : blocks)
+			if (var.blockID == block.id)
+				return true;
+		
+		return false;
+	}
+	
+	public int getByName(String name)
+	{
+		if (!isReachable(name))
+			throw new UnresolvedVariableError(Strings.UNRESOLVED_VARIABLE.f(name));
+		
+		for (int i = 0; i < variables.size(); i++)
+			if (variables.get(i).name.equals(name))
+				return i;
+		throw new ParseError(Strings.UNRESOLVED_VARIABLE_ERROR.f(name));
+	}
+	
+	public Variable getById(int id)
+	{
+		return variables.get(id);
+	}
+	
+	private int nextID()
+	{
+		return blockIDCounter++;
+	}
+	
+	private class Block
+	{
+		public int id, location;
+		
+		public Block()
 		{
-			Stack<Integer> s = new Stack<Integer>();
-			s.push(0);
-			vars.put(base, s);
+			id = nextID();
+			location = 0;
 		}
 		
-		Stack<Integer> stack = vars.get(base);
-		while (stack.size() - 1 > depth)
-			stack.pop();
-		while (stack.size() - 1 < depth)
-			stack.push(0);
-		int n = stack.pop();
-		stack.push(n + 1);
-		return n;
+		private int nextLocation()
+		{
+			return location++;
+		}
 	}
 }

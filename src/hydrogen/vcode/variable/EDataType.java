@@ -1,17 +1,17 @@
 package hydrogen.vcode.variable;
 
-public enum DataType
+public enum EDataType
 {
 	BOOLEAN("boolean", false),
 	BYTE("byte", false),
-	INT("int", false),
+	INTEGER("int", false),
 	FLOAT("float", false),
 	VOID("void", true);
 	
 	public String syntax;
 	public boolean returnOnly;
 	
-	DataType(String syntax, boolean returnOnly)
+	EDataType(String syntax, boolean returnOnly)
 	{
 		this.syntax = syntax;
 		this.returnOnly = returnOnly;

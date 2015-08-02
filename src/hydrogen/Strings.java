@@ -7,7 +7,10 @@ public enum Strings
 	UNEXPECTED_TOKEN("Unexpected Token: %s"),
 	SYNTAX_ERROR("%s"),
 	OPERATOR_SYNTAX_ERROR("Token '%s' is not an operator."),
-	OPERATOR_PARSE_ERROR("Sequence '%s' is not an operator.");
+	OPERATOR_PARSE_ERROR("Sequence '%s' is not an operator."),
+	UNRESOLVED_VARIABLE("%s can not be resolved."),
+	UNRESOLVED_VARIABLE_ERROR("%s can not be found."),
+	DUPLICATE_VARIABLE("Duplicate variable %s");
 	
 	public String msg;
 	

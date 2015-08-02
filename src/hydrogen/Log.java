@@ -3,10 +3,11 @@ package hydrogen;
 public class Log
 {
 	// level:
-	// 0 = debug
-	// 1 = verbose
-	// 2 = warn
-	// 3 = error (always logged)
+	// 0 = (d) Debug
+	// 1 = (i) Info
+	// 2 = (w) Warn
+	// 3 = (e) Error (always logged)
+	//     (s) Severe error
 	static int level = 0;
 	
 	public static void setLevel(int newlevel)
@@ -14,23 +15,28 @@ public class Log
 		level = newlevel;
 	}
 	
+	public static void s(String msg)
+	{
+		System.err.println("[Severe error] " + msg);
+	}
+	
 	public static void e(String msg)
 	{
-		System.err.println("[E] " + msg);
+		System.err.println("[Error] " + msg);
 	}
 	
 	public static void w(String msg)
 	{
-		System.err.println("[W] " + msg);
+		System.err.println("[Warn] " + msg);
 	}
 	
-	public static void v(String msg)
+	public static void i(String msg)
 	{
-		System.out.println("[V] " + msg);
+		System.out.println("[Info] " + msg);
 	}
 	
 	public static void d(String msg)
 	{
-		System.out.println("[D] " + msg);
+		System.out.println("[Debug] " + msg);
 	}
 }

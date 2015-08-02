@@ -18,7 +18,7 @@ public enum EToken
 	BRACKET_CLOSE("\\)", null, true),
 	FUNCTION_DEFINE(Util.getReturnTypes() + "\\s*" + Util.NAME + "\\s*\\(", null, false),
 	CALL(Util.NAME + "\\s*\\(", null, true),
-	OPERATOR(Util.OPERATOR, null, true),
+	OPERATOR(Util.getOperators(), null, true),
 	FLOAT(Util.FLOAT, null, true),
 	INTEGER(Util.INT, null, true),
 	VARIABLE_DEFINE(Util.getModifierTypes() + "\\s*" + Util.NAME + "\\s*=[^=]", new AssignmentParser(), false),
@@ -43,7 +43,6 @@ public enum EToken
 	static class Util
 	{
 		static String
-			OPERATOR =	"(==|<=|>=|<|>|!=|\\+|-|\\*|/|%|\\^)",
 			BOOLEAN =	"(true|false)\\b(?!\\.)",
 			NAME =		"([a-zA-Z_][a-zA-Z0-9_\\.]*)",
 			FLOAT = 	"(\\d*\\.\\d+|\\d+\\.\\d*)",
@@ -51,7 +50,6 @@ public enum EToken
 		
 		public static String getModifierTypes()
 		{
-			// yes, yes, bad practice
 			StringBuilder sb = new StringBuilder(")");
 			for (int i=0; i<DataType.values().length; i++)
 				if (!DataType.values()[i].returnOnly)
@@ -61,10 +59,18 @@ public enum EToken
 		
 		public static String getReturnTypes()
 		{
-			// yes, yes, bad practice
 			StringBuilder sb = new StringBuilder(")");
 			for (int i=0; i<DataType.values().length; i++)
 				sb.insert(0, DataType.values()[i].syntax).insert(0, "|");
+			return "(" + sb.substring(1).toString();
+		}
+		
+		public static String getOperators()
+		{
+			StringBuilder sb = new StringBuilder(")");
+			for (int i=0; i<EOperator.values().length; i++)
+				sb.insert(0, EOperator.values()[i].regex).insert(0, "|");
+			System.out.println("(" + sb.substring(1).toString());
 			return "(" + sb.substring(1).toString();
 		}
 		

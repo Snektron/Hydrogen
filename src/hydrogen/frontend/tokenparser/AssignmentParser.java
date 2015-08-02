@@ -1,6 +1,6 @@
 package hydrogen.frontend.tokenparser;
 
-import hydrogen.frontend.token.EToken;
+import hydrogen.frontend.parser.ExpressionParser;
 import hydrogen.vcode.VirtualCode;
 
 public class AssignmentParser implements ITokenParser
@@ -8,9 +8,6 @@ public class AssignmentParser implements ITokenParser
 	@Override
 	public void parse(VirtualCode vcode)
 	{
-		if (vcode.currentToken().is(EToken.VARIABLE_DEFINE))
-		{
-			
-		}
+		ExpressionParser.parse(vcode);
 	}
 }

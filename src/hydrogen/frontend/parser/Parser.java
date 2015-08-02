@@ -20,7 +20,7 @@ public class Parser
 	
 	public static void parseNext(VirtualCode vcode)
 	{
-		Log.d("Parsing "+vcode.nextToken().name());
+		Log.d("Parsing "+vcode.nextToken().name() + " " + vcode.currentToken().sequence);
 		vcode.currentToken().parse(vcode);
 	}
 	

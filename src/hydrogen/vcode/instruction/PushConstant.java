@@ -2,7 +2,7 @@ package hydrogen.vcode.instruction;
 
 import hydrogen.vcode.variable.Constant;
 
-public class PushConstant
+public class PushConstant implements IInstruction
 {
 	/**
 	 * This instruction pushes a constant variable to the stack.

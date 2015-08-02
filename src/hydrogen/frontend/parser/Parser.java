@@ -28,9 +28,9 @@ public class Parser
 	{
 		Log.d(Strings.PARSER_DUMP.msg);
 		IInstruction inst;
-		for (int i = 0; i<vcode.vcode.size(); i++)
+		for (int i = 0; i<vcode.vcode().size(); i++)
 		{
-			inst = vcode.vcode.get(i);
+			inst = vcode.vcode().get(i);
 			Log.d(i + ": " + inst.toString());
 		}
 	}

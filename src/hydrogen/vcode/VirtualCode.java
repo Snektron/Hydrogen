@@ -7,16 +7,28 @@ import hydrogen.frontend.token.Tokenizer;
 import hydrogen.vcode.instruction.IInstruction;
 import hydrogen.vcode.variable.VariableAllocator;
 
-public class VirtualCode extends VariableAllocator
+public class VirtualCode
 {
 	Token currentToken, lastToken;
 	Tokenizer tokenizer;
-	public ArrayList<IInstruction> vcode;
+	ArrayList<IInstruction> vcode;
+	VariableAllocator valloc;
 	
 	public VirtualCode(Tokenizer t)
 	{
 		this.tokenizer = t;
 		vcode = new ArrayList<IInstruction>();
+		valloc = new VariableAllocator();
+	}
+	
+	public VariableAllocator valloc()
+	{
+		return valloc;
+	}
+	
+	public ArrayList<IInstruction> vcode()
+	{
+		return vcode;
 	}
 	
 	public void add(IInstruction instruction)

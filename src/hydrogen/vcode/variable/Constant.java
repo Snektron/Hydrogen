@@ -1,8 +1,6 @@
 package hydrogen.vcode.variable;
 
-import hydrogen.vcode.instruction.IInstruction;
-
-public class Constant implements IInstruction
+public class Constant
 {
 	EDataType type;
 	String value;

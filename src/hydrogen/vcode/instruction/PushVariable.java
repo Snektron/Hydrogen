@@ -1,6 +1,6 @@
 package hydrogen.vcode.instruction;
 
-public class PushVariable implements IInstruction
+public class PushVariable extends Instruction
 {
 	/**
 	 * This instruction pushes the value of a variable to the stack

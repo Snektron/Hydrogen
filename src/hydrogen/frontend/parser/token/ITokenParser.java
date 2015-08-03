@@ -1,4 +1,4 @@
-package hydrogen.frontend.tokenparser;
+package hydrogen.frontend.parser.token;
 
 import hydrogen.vcode.VirtualCode;
 

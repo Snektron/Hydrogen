@@ -2,43 +2,60 @@ package hydrogen.frontend.token;
 
 import java.util.regex.Pattern;
 
-import hydrogen.frontend.tokenparser.AssignmentParser;
-import hydrogen.frontend.tokenparser.ITokenParser;
-import hydrogen.frontend.tokenparser.UnexpectedTokenParser;
-import hydrogen.vcode.variable.EDataType;
+import hydrogen.frontend.parser.expression.ConstantParser;
+import hydrogen.frontend.parser.expression.IExpressionParser;
+import hydrogen.frontend.parser.expression.IllegalTokenParser;
+import hydrogen.frontend.parser.expression.OperatorParser;
+import hydrogen.frontend.parser.token.AssignmentParser;
+import hydrogen.frontend.parser.token.ITokenParser;
+import hydrogen.frontend.parser.token.UnexpectedTokenParser;
+import hydrogen.vcode.VirtualCode;
 
 public enum EToken
 {	
-	BOOLEAN(Util.BOOLEAN, null, true),
-	RETURN(Util.keyword("return"), null, false),
-	IF("if\\s*\\(", null, false),
-	ELSE(Util.keyword("else"), null, false),
-	END(Util.keyword("end"), null, false),
-	BRACKET_OPEN("\\(", null, true),
-	BRACKET_CLOSE("\\)", null, true),
-	FUNCTION_DEFINE(Util.getReturnTypes() + "\\s*" + Util.NAME + "\\s*\\(", null, false),
-	CALL(Util.NAME + "\\s*\\(", null, true),
-	OPERATOR(Util.getOperators(), null, true),
-	FLOAT(Util.FLOAT, null, true),
-	INTEGER(Util.INT, null, true),
-	VARIABLE_DEFINE(Util.getModifierTypes() + "\\s*" + Util.NAME + "\\s*=[^=]", new AssignmentParser(), false),
-	ASSIGNMENT(Util.NAME + "\\s*=[^=]", new AssignmentParser(), false),
-	PARAMETER_DEFINE(Util.getModifierTypes() + "\\s*" + Util.NAME, null, true),
-	VARIABLE(Util.NAME, null, true),
-	ARGUMENT_SEPERATOR(",", null, false);
+	BOOLEAN(Util.BOOLEAN, null, new ConstantParser(EDataType.BOOLEAN)),
+	RETURN(Util.keyword("return"), null, null),
+	IF("if\\s*\\(", null, null),
+	ELSE(Util.keyword("else"), null, null),
+	END(Util.keyword("end"), null, null),
+	BRACKET_OPEN("\\(", null, null),
+	BRACKET_CLOSE("\\)", null, null),
+	FUNCTION_DEFINE(Util.getReturnTypes() + "\\s*" + Util.NAME + "\\s*\\(", null, null),
+	CALL(Util.NAME + "\\s*\\(", null, null),
+	OPERATOR(Util.getOperators(), null, new OperatorParser()),
+	FLOAT(Util.FLOAT, null, new ConstantParser(EDataType.FLOAT)),
+	INTEGER(Util.INT, null, new ConstantParser(EDataType.INTEGER)),
+	VARIABLE_DEFINE(Util.getModifierTypes() + "\\s*" + Util.NAME + "\\s*=[^=]", new AssignmentParser(), null),
+	ASSIGNMENT(Util.NAME + "\\s*=[^=]", new AssignmentParser(), null),
+	PARAMETER_DEFINE(Util.getModifierTypes() + "\\s*" + Util.NAME, null, null),
+	VARIABLE(Util.NAME, null, null),
+	ARGUMENT_SEPERATOR(",", null, null);
 	
 	Pattern pattern;
-	ITokenParser parser;
-	boolean allowInExpr;
+	ITokenParser tokParser;
+	IExpressionParser exprParser;
 	
-	EToken(String regex, ITokenParser parser, boolean allowInExpr)
+	EToken(String regex, ITokenParser tokParser, IExpressionParser exprParser)
 	{
 		pattern = Pattern.compile("^("+regex+")");
-		if (parser == null)
-			this.parser = new UnexpectedTokenParser();
-		else
-			this.parser = parser;
-		this.allowInExpr = allowInExpr;
+		
+		this.tokParser = tokParser == null ? new UnexpectedTokenParser() : tokParser;
+		this.exprParser = exprParser == null ? new IllegalTokenParser() : exprParser;
+	}
+	
+	public void parseToken(VirtualCode vcode)
+	{
+		tokParser.parse(vcode);
+	}
+	
+	public void parseExpression(VirtualCode vcode)
+	{
+		exprParser.parse(vcode);
+	}
+	
+	public void closeExpression(Token t, VirtualCode vcode)
+	{
+		exprParser.closeExpression(t, vcode);
 	}
 	
 	static class Util

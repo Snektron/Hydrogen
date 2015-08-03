@@ -1,24 +1,32 @@
 package hydrogen.vcode;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import hydrogen.frontend.token.Token;
 import hydrogen.frontend.token.Tokenizer;
-import hydrogen.vcode.instruction.IInstruction;
+import hydrogen.vcode.instruction.Instruction;
 import hydrogen.vcode.variable.VariableAllocator;
 
 public class VirtualCode
 {
 	Token currentToken, lastToken;
 	Tokenizer tokenizer;
-	ArrayList<IInstruction> vcode;
+	ArrayList<Instruction> vcode;
 	VariableAllocator valloc;
+	Stack<Token> operators;
 	
 	public VirtualCode(Tokenizer t)
 	{
 		this.tokenizer = t;
-		vcode = new ArrayList<IInstruction>();
+		vcode = new ArrayList<Instruction>();
 		valloc = new VariableAllocator();
+		operators = new Stack<Token>();
+	}
+	
+	public Stack<Token> opStack()
+	{
+		return operators;
 	}
 	
 	public VariableAllocator valloc()
@@ -26,12 +34,12 @@ public class VirtualCode
 		return valloc;
 	}
 	
-	public ArrayList<IInstruction> vcode()
+	public ArrayList<Instruction> vcode()
 	{
 		return vcode;
 	}
 	
-	public void add(IInstruction instruction)
+	public void add(Instruction instruction)
 	{
 		vcode.add(instruction);
 	}

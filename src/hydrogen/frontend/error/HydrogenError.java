@@ -13,6 +13,8 @@ public class HydrogenError extends RuntimeException
 	
 	public void logError()
 	{
-		Log.e(getMessage());
+		Log.e(getClass().getSimpleName()+": "+getMessage());
+		for (int i = 0; i < getStackTrace().length; i++)
+			Log.de(getStackTrace()[i].toString());
 	}
 }

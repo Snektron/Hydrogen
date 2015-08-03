@@ -14,6 +14,6 @@ public class ParseError extends HydrogenError
 	@Override
 	public void logError()
 	{
-		Log.s(getMessage());
+		Log.s(getClass().getSimpleName() + ": " + getMessage());
 	}
 }

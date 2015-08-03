@@ -7,6 +7,8 @@ import hydrogen.Strings;
 import hydrogen.frontend.error.ParseError;
 import hydrogen.frontend.error.RedefinitionError;
 import hydrogen.frontend.error.UnresolvedVariableError;
+import hydrogen.frontend.token.EDataType;
+import hydrogen.frontend.token.ELocationType;
 
 public class VariableAllocator
 {

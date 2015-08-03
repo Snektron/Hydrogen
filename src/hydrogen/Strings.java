@@ -10,7 +10,9 @@ public enum Strings
 	OPERATOR_PARSE_ERROR("Sequence '%s' is not an operator."),
 	UNRESOLVED_VARIABLE("%s can not be resolved."),
 	UNRESOLVED_VARIABLE_ERROR("%s can not be found."),
-	DUPLICATE_VARIABLE("Duplicate variable %s");
+	DUPLICATE_VARIABLE("Duplicate variable %s."),
+	ILLEGAL_TOKEN("Illegal token %s in expression."),
+	TOKEN_ERROR("Error under token %s.");
 	
 	public String msg;
 	

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import hydrogen.frontend.Frontend;
 import hydrogen.frontend.error.HydrogenError;
+import hydrogen.frontend.parser.Parser;
 
 public class Hydrogen
 {
@@ -11,7 +12,7 @@ public class Hydrogen
 	public static void compile(String file)
 	{
 		try {
-			Frontend.pass(file);
+			Parser.dump(Frontend.pass(file));
 		} catch (IOException e)
 		{
 			e.printStackTrace();

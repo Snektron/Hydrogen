@@ -1,6 +1,6 @@
-package hydrogen.frontend.tokenparser;
+package hydrogen.frontend.parser.token;
 
-import hydrogen.frontend.parser.ExpressionParser;
+import hydrogen.frontend.parser.expression.ExpressionParser;
 import hydrogen.vcode.VirtualCode;
 
 public class AssignmentParser implements ITokenParser

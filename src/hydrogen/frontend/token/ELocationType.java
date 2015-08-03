@@ -1,4 +1,4 @@
-package hydrogen.vcode.variable;
+package hydrogen.frontend.token;
 
 public enum ELocationType
 {

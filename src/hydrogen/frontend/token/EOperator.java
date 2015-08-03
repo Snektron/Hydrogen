@@ -20,7 +20,7 @@ public enum EOperator
 	NOT_EQUALS("!=", 1);
 	
 	String operator, regex;
-	int precedence;
+	public int precedence;
 	
 	private EOperator(String operator, int precedence)
 	{

@@ -3,6 +3,7 @@ package hydrogen.frontend.token;
 import hydrogen.Strings;
 import hydrogen.frontend.error.ParseError;
 import hydrogen.frontend.error.SyntaxError;
+import hydrogen.frontend.parser.expression.IllegalTokenParser;
 import hydrogen.vcode.VirtualCode;
 
 public class Token
@@ -21,9 +22,19 @@ public class Token
 		return token.name();
 	}
 	
-	public void parse(VirtualCode vcode)
+	public void parseToken(VirtualCode vcode)
 	{
-		token.parser.parse(vcode);
+		token.parseToken(vcode);
+	}
+	
+	public void parseExpression(VirtualCode vcode)
+	{
+		token.parseExpression(vcode);
+	}
+	
+	public void closeExpression(VirtualCode vcode)
+	{
+		token.closeExpression(this, vcode);
 	}
 	
 	public boolean is(EToken other)
@@ -33,7 +44,7 @@ public class Token
 	
 	public boolean allowedInExpression()
 	{
-		return token.allowInExpr;
+		return !(token.exprParser instanceof IllegalTokenParser);
 	}
 	
 	public EOperator getOperator()

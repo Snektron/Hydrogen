@@ -4,7 +4,7 @@ import hydrogen.Log;
 import hydrogen.Strings;
 import hydrogen.frontend.token.Tokenizer;
 import hydrogen.vcode.VirtualCode;
-import hydrogen.vcode.instruction.IInstruction;
+import hydrogen.vcode.instruction.Instruction;
 
 public class Parser
 {
@@ -21,13 +21,13 @@ public class Parser
 	public static void parseNext(VirtualCode vcode)
 	{
 		Log.d("Parsing "+vcode.nextToken().name() + " " + vcode.currentToken().sequence);
-		vcode.currentToken().parse(vcode);
+		vcode.currentToken().parseToken(vcode);
 	}
 	
 	public static void dump(VirtualCode vcode)
 	{
 		Log.d(Strings.PARSER_DUMP.msg);
-		IInstruction inst;
+		Instruction inst;
 		for (int i = 0; i<vcode.vcode().size(); i++)
 		{
 			inst = vcode.vcode().get(i);

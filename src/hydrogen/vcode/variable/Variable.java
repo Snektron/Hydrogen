@@ -1,5 +1,8 @@
 package hydrogen.vcode.variable;
 
+import hydrogen.frontend.token.EDataType;
+import hydrogen.frontend.token.ELocationType;
+
 public class Variable
 {
 	public ELocationType locationType;

@@ -8,10 +8,10 @@ public class PushVariable extends Instruction
 	 * 	The id of the variable, obtained by VirtualCode.registerVariable();
 	 */
 	
-	public int variable;
+	public int variableID;
 	
-	public PushVariable(int variable)
+	public PushVariable(int variableID)
 	{
-		this.variable = variable;
+		this.variableID = variableID;
 	}
 }

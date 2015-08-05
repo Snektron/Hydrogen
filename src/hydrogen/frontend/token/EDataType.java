@@ -46,4 +46,21 @@ public enum EDataType
 	{
 		return null;
 	}
+	
+	public static String getModifierTypes()
+	{
+		StringBuilder sb = new StringBuilder(")");
+		for (int i=0; i<values().length; i++)
+			if (!values()[i].returnOnly)
+				sb.insert(0, values()[i].syntax).insert(0, "|");
+		return "(" + sb.substring(1).toString();
+	}
+	
+	public static String getReturnTypes()
+	{
+		StringBuilder sb = new StringBuilder(")");
+		for (int i=0; i<values().length; i++)
+			sb.insert(0, values()[i].syntax).insert(0, "|");
+		return "(" + sb.substring(1).toString();
+	}
 }

@@ -17,4 +17,10 @@ public class Operation extends Instruction
 	{
 		this.operator = operator;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return getClass().getSimpleName() + " " + operator.name();
+	}
 }

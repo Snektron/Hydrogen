@@ -11,16 +11,37 @@ public class OperatorParser implements IExpressionParser
 	@Override
 	public void parse(VirtualCode vcode)
 	{
-		EOperator o1 = vcode.currentToken().getOperator();
+		EOperator o1 = EOperator.getOperator(vcode.currentToken());
 		
-		while (!vcode.opStack().empty() && vcode.opStack().peek().is(EToken.OPERATOR) && o1.precedence <= vcode.opStack().peek().getOperator().precedence)
-			vcode.add(new Operation(vcode.opStack().pop().getOperator()));
+		if (o1 == EOperator.MINUS)
+			if (vcode.prevToken().is(EToken.BOOLEAN) || 
+				vcode.prevToken().is(EToken.INTEGER) || 
+				vcode.prevToken().is(EToken.FLOAT) || 
+				vcode.prevToken().is(EToken.VARIABLE) || 
+				vcode.prevToken().is(EToken.BRACKET_CLOSE))
+				vcode.currentToken().sequence = EOperator.SUBTRACT.regex;
+			else
+				vcode.currentToken().sequence = EOperator.NEGATION.regex;
+		
+		EOperator o2;
+		
+		while (!vcode.opStack().empty() && vcode.opStack().peek().is(EToken.OPERATOR))
+		{
+			o2 = EOperator.getOperator(vcode.opStack().peek());
+			if (EOperator.comparePrecedence(o1, o2))
+			{
+				vcode.add(new Operation(EOperator.getOperator(vcode.opStack().pop())));
+				continue;
+			}
+			break;
+		}
+		
 		vcode.opStack().push(vcode.currentToken());
 	}
-
+	
 	@Override
 	public void closeExpression(Token token, VirtualCode vcode)
 	{
-		vcode.add(new Operation(token.getOperator()));
+		vcode.add(new Operation(EOperator.getOperator(token)));
 	}
 }

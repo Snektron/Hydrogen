@@ -5,8 +5,10 @@ import java.util.Stack;
 
 import hydrogen.frontend.token.Token;
 import hydrogen.frontend.token.Tokenizer;
+import hydrogen.vcode.data.ConstantAllocator;
+import hydrogen.vcode.data.FunctionAllocator;
+import hydrogen.vcode.data.VariableAllocator;
 import hydrogen.vcode.instruction.Instruction;
-import hydrogen.vcode.variable.VariableAllocator;
 
 public class VirtualCode
 {
@@ -14,6 +16,8 @@ public class VirtualCode
 	Tokenizer tokenizer;
 	ArrayList<Instruction> vcode;
 	VariableAllocator valloc;
+	ConstantAllocator calloc;
+	FunctionAllocator falloc;
 	Stack<Token> operators;
 	
 	public VirtualCode(Tokenizer t)
@@ -21,6 +25,8 @@ public class VirtualCode
 		this.tokenizer = t;
 		vcode = new ArrayList<Instruction>();
 		valloc = new VariableAllocator();
+		calloc = new ConstantAllocator();
+		falloc = new FunctionAllocator();
 		operators = new Stack<Token>();
 	}
 	
@@ -32,6 +38,16 @@ public class VirtualCode
 	public VariableAllocator valloc()
 	{
 		return valloc;
+	}
+	
+	public ConstantAllocator calloc()
+	{
+		return calloc;
+	}
+	
+	public FunctionAllocator falloc()
+	{
+		return falloc;
 	}
 	
 	public ArrayList<Instruction> vcode()
@@ -51,12 +67,17 @@ public class VirtualCode
 		return currentToken;
 	}
 	
+	public Token peekToken()
+	{
+		return tokenizer.peekToken();
+	}
+	
 	public Token currentToken()
 	{
 		return currentToken;
 	}
 	
-	public Token lastToken()
+	public Token prevToken()
 	{
 		return lastToken;
 	}

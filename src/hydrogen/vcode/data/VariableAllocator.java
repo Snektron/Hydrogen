@@ -1,4 +1,4 @@
-package hydrogen.vcode.variable;
+package hydrogen.vcode.data;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -76,14 +76,14 @@ public class VariableAllocator
 	public int register(EDataType dataType, String name)
 	{
 		if (isReachable(name))
-			throw new RedefinitionError(Strings.DUPLICATE_VARIABLE.f(name));
+			throw new RedefinitionError(Strings.VARIABLE_REDEFINITION.f(name));
 		
 		ELocationType locationType = inFunction ? ELocationType.GLOBAL : ELocationType.LOCAL;
 		variables.add(new Variable(locationType, dataType, name, getBlocks().peek().id, getBlocks().peek().nextLocation()));
 		return variables.size()-1;
 	}
 	
-	public Stack<Block> getBlocks()
+	private Stack<Block> getBlocks()
 	{
 		return inFunction ? localBlocks : globalBlocks;
 	}

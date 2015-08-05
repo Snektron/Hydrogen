@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import hydrogen.FileReader;
 import hydrogen.Strings;
+import hydrogen.frontend.error.EndOfFileError;
 import hydrogen.frontend.error.TokenizeError;
 
 public class Tokenizer
@@ -34,6 +35,25 @@ public class Tokenizer
 			}
 		}	
 
+		throw new TokenizeError(Strings.UNEXPECTED_INPUT.f(code.substring(0, code.length() > 20 ? 20 : code.length()-1)));
+	}
+	
+	public Token peekToken()
+	{
+		if (!hasCode())
+			throw new EndOfFileError(Strings.END_OF_FILE.msg);
+		
+		EToken[] tokens = EToken.values();
+		Matcher m;
+
+		for (int i = 0; i < tokens.length; i++)
+		{
+			m = tokens[i].pattern.matcher(code);
+			
+			if (m.find())
+				return new Token(tokens[i], m.group());
+		}
+		
 		throw new TokenizeError(Strings.UNEXPECTED_INPUT.f(code.substring(0, code.length() > 20 ? 20 : code.length()-1)));
 	}
 	

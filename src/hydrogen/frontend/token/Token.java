@@ -1,8 +1,5 @@
 package hydrogen.frontend.token;
 
-import hydrogen.Strings;
-import hydrogen.frontend.error.ParseError;
-import hydrogen.frontend.error.SyntaxError;
 import hydrogen.frontend.parser.expression.IllegalTokenParser;
 import hydrogen.vcode.VirtualCode;
 
@@ -45,18 +42,5 @@ public class Token
 	public boolean allowedInExpression()
 	{
 		return !(token.exprParser instanceof IllegalTokenParser);
-	}
-	
-	public EOperator getOperator()
-	{
-		if (token != EToken.OPERATOR)
-			throw new SyntaxError(Strings.OPERATOR_SYNTAX_ERROR.f(token.name()));
-		
-		for (int i=0; i<EOperator.values().length; i++)
-			if (sequence.matches(EOperator.values()[i].regex))
-				return EOperator.values()[i];
-		
-		// this shouldn't happen
-		throw new ParseError(Strings.OPERATOR_PARSE_ERROR.f(sequence));
 	}
 }

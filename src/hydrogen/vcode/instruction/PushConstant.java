@@ -1,17 +1,15 @@
 package hydrogen.vcode.instruction;
 
-import hydrogen.vcode.variable.Constant;
-
 public class PushConstant extends Instruction
 {
 	/**
 	 * This instruction pushes a constant variable to the stack.
 	 */
 	
-	public Constant constant;
+	public int constantID;
 	
-	public PushConstant(Constant constant)
+	public PushConstant(int constantID)
 	{
-		this.constant = constant;
+		this.constantID = constantID;
 	}
 }

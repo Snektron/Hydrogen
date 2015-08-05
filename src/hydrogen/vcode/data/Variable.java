@@ -1,4 +1,4 @@
-package hydrogen.vcode.variable;
+package hydrogen.vcode.data;
 
 import hydrogen.frontend.token.EDataType;
 import hydrogen.frontend.token.ELocationType;

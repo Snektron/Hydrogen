@@ -6,7 +6,6 @@ import hydrogen.frontend.token.EDataType;
 import hydrogen.frontend.token.Token;
 import hydrogen.vcode.VirtualCode;
 import hydrogen.vcode.instruction.PushConstant;
-import hydrogen.vcode.variable.Constant;
 
 public class ConstantParser implements IExpressionParser
 {
@@ -20,7 +19,7 @@ public class ConstantParser implements IExpressionParser
 	@Override
 	public void parse(VirtualCode vcode)
 	{
-		vcode.add(new PushConstant(new Constant(dataType, dataType.parse(vcode.currentToken()))));
+		vcode.add(new PushConstant(vcode.calloc().register(dataType, dataType.parse(vcode.currentToken()))));
 	}
 
 	@Override

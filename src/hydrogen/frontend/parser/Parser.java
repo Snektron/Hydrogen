@@ -12,6 +12,7 @@ public class Parser
 	{
 		VirtualCode vcode = new VirtualCode(t);
 		
+		vcode.nextToken();
 		while(vcode.hasCode())
 			parseNext(vcode);
 
@@ -20,8 +21,12 @@ public class Parser
 	
 	public static void parseNext(VirtualCode vcode)
 	{
-		Log.d("Parsing "+vcode.nextToken().name() + " " + vcode.currentToken().sequence);
-		vcode.currentToken().parseToken(vcode);
+		while(true)
+		{
+			vcode.currentToken().parseToken(vcode);
+			if (!vcode.hasCode())
+				break;
+		}
 	}
 	
 	public static void dump(VirtualCode vcode)

@@ -17,18 +17,29 @@ public class ExpressionParser
 			vcode.currentToken().parseExpression(vcode);
 			if (!vcode.hasCode())
 				break;
-			Token peek = vcode.peekToken();
+			Token next = vcode.nextToken();
 			
-			if (vcode.currentToken().isOneOf(EToken.OPERATOR, EToken.BRACKET_OPEN, EToken.CALL, EToken.ARGUMENT_SEPERATOR) &&
-				(!EOperator.allowedAfterOperator(peek) || !peek.allowedInExpression()))
-				throw new SyntaxError(vcode.getErrorCode());
-			else if (!peek.allowedInExpression() || peek.is(EToken.CALL))
+			if (vcode.prevToken().isOneOf(EToken.OPERATOR, EToken.BRACKET_OPEN, EToken.CALL, EToken.ARGUMENT_SEPERATOR))
+			{
+				if (!EOperator.allowedAfterOperator(next) || !next.allowedInExpression())
+					throw new SyntaxError(vcode.getErrorCode());
+			}
+			else if (!next.allowedInExpression() || next.is(EToken.CALL))
 				break;
 			
-			vcode.nextToken();
+			if ((next.is(EToken.BRACKET_CLOSE) && !hasOpStackOpenBracket(vcode)) || next.is(EToken.ARGUMENT_SEPERATOR))
+				break;
 		}
 		
 		while (!vcode.opStack().empty())
 			vcode.opStack().pop().closeExpression(vcode);
+	}
+	
+	private static boolean hasOpStackOpenBracket(VirtualCode vcode)
+	{
+		for (Token t:vcode.opStack())
+			if (t.token == EToken.BRACKET_OPEN)
+				return true;
+		return false;
 	}
 }

@@ -15,5 +15,7 @@ public class ParseError extends HydrogenError
 	public void logError()
 	{
 		Log.s(getClass().getSimpleName() + ": " + getMessage());
+		for (int i = 0; i < getStackTrace().length; i++)
+			Log.de(getStackTrace()[i].toString());
 	}
 }

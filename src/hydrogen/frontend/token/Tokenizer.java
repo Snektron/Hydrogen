@@ -59,7 +59,7 @@ public class Tokenizer
 	
 	public String getErrorCode()
 	{
-		return code.substring(0, code.length() > 20 ? 20 : code.length()-1);
+		return code.substring(0, code.length() > 20 ? 20 : code.length() > 0 ? code.length()-1 : 0);
 	}
 	
 	public boolean hasCode()

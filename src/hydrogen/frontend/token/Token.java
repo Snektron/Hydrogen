@@ -14,6 +14,12 @@ public class Token
 		this.sequence = sequence;
 	}
 	
+	public Token(Token t)
+	{
+		this.token = t.token;
+		this.sequence = t.sequence;
+	}
+	
 	public String name()
 	{
 		return token.name();

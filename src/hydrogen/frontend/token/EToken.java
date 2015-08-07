@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import hydrogen.frontend.parser.MatchUtil;
 import hydrogen.frontend.parser.expression.BracketCloseParser;
 import hydrogen.frontend.parser.expression.BracketOpenParser;
+import hydrogen.frontend.parser.expression.CallParser;
 import hydrogen.frontend.parser.expression.ConstantParser;
 import hydrogen.frontend.parser.expression.IExpressionParser;
 import hydrogen.frontend.parser.expression.IllegalTokenParser;
@@ -17,7 +18,7 @@ import hydrogen.vcode.VirtualCode;
 
 public enum EToken
 {	
-	BOOLEAN(MatchUtil.BOOLEAN, null, null),
+	BOOLEAN(MatchUtil.BOOLEAN, null, new ConstantParser()),
 	RETURN(MatchUtil.keyword("return"), null, null),
 	IF("if\\s*\\(", null, null),
 	ELSE(MatchUtil.keyword("else"), null, null),
@@ -25,7 +26,7 @@ public enum EToken
 	BRACKET_OPEN("\\(", null, new BracketOpenParser()),
 	BRACKET_CLOSE("\\)", null, new BracketCloseParser()),
 	FUNCTION_DEFINE("function\\s+" + MatchUtil.NAME + "\\s*\\(", null, null),
-	CALL(MatchUtil.NAME + "\\s*\\(", null, new BracketOpenParser()),
+	CALL(MatchUtil.NAME + "\\s*\\(", new CallParser(), new CallParser()),
 	OPERATOR(EOperator.getOperators(), null, new OperatorParser()),
 	INTEGER(MatchUtil.INT, null, new ConstantParser()),
 	ASSIGNMENT(MatchUtil.NAME + "\\s*=[^=]", new AssignmentParser(), null),

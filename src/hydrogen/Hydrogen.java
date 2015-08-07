@@ -10,7 +10,7 @@ public class Hydrogen
 {
 	
 	public static void compile(String file)
-	{
+	{		
 		try {
 			Parser.dump(Frontend.pass(file));
 		} catch (IOException e)

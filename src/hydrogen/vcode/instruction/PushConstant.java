@@ -1,5 +1,7 @@
 package hydrogen.vcode.instruction;
 
+import hydrogen.vcode.VirtualCode;
+
 public class PushConstant extends Instruction
 {
 	/**
@@ -11,5 +13,10 @@ public class PushConstant extends Instruction
 	public PushConstant(int constantID)
 	{
 		this.constantID = constantID;
+	}
+	
+	public String toString(VirtualCode vcode)
+	{
+		return getClass().getSimpleName() + " " + vcode.calloc().get(constantID).value;
 	}
 }

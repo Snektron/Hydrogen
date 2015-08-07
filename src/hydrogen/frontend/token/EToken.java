@@ -2,10 +2,14 @@ package hydrogen.frontend.token;
 
 import java.util.regex.Pattern;
 
+import hydrogen.frontend.parser.MatchUtil;
+import hydrogen.frontend.parser.expression.BracketCloseParser;
+import hydrogen.frontend.parser.expression.BracketOpenParser;
 import hydrogen.frontend.parser.expression.ConstantParser;
 import hydrogen.frontend.parser.expression.IExpressionParser;
 import hydrogen.frontend.parser.expression.IllegalTokenParser;
 import hydrogen.frontend.parser.expression.OperatorParser;
+import hydrogen.frontend.parser.expression.VariableParser;
 import hydrogen.frontend.parser.token.AssignmentParser;
 import hydrogen.frontend.parser.token.ITokenParser;
 import hydrogen.frontend.parser.token.UnexpectedTokenParser;
@@ -13,22 +17,22 @@ import hydrogen.vcode.VirtualCode;
 
 public enum EToken
 {	
-	BOOLEAN(Util.BOOLEAN, null, new ConstantParser(EDataType.BOOLEAN)),
-	RETURN(Util.keyword("return"), null, null),
+	BOOLEAN(MatchUtil.BOOLEAN, null, new ConstantParser(EDataType.BOOLEAN)),
+	RETURN(MatchUtil.keyword("return"), null, null),
 	IF("if\\s*\\(", null, null),
-	ELSE(Util.keyword("else"), null, null),
-	END(Util.keyword("end"), null, null),
-	BRACKET_OPEN("\\(", null, null),
-	BRACKET_CLOSE("\\)", null, null),
-	FUNCTION_DEFINE(EDataType.getReturnTypes() + "\\s*" + Util.NAME + "\\s*\\(", null, null),
-	CALL(Util.NAME + "\\s*\\(", null, null),
+	ELSE(MatchUtil.keyword("else"), null, null),
+	END(MatchUtil.keyword("end"), null, null),
+	BRACKET_OPEN("\\(", null, new BracketOpenParser()),
+	BRACKET_CLOSE("\\)", null, new BracketCloseParser()),
+	FUNCTION_DEFINE(EDataType.getReturnTypes() + "\\s*" + MatchUtil.NAME + "\\s*\\(", null, null),
+	CALL(MatchUtil.NAME + "\\s*\\(", null, new BracketOpenParser()),
 	OPERATOR(EOperator.getOperators(), null, new OperatorParser()),
-	FLOAT(Util.FLOAT, null, new ConstantParser(EDataType.FLOAT)),
-	INTEGER(Util.INT, null, new ConstantParser(EDataType.INTEGER)),
-	VARIABLE_DEFINE(EDataType.getModifierTypes() + "\\s*" + Util.NAME + "\\s*=[^=]", new AssignmentParser(), null),
-	ASSIGNMENT(Util.NAME + "\\s*=[^=]", new AssignmentParser(), null),
-	PARAMETER_DEFINE(EDataType.getModifierTypes() + "\\s*" + Util.NAME, null, null),
-	VARIABLE(Util.NAME, null, null),
+	FLOAT(MatchUtil.FLOAT, null, new ConstantParser(EDataType.FLOAT)),
+	INTEGER(MatchUtil.INT, null, new ConstantParser(EDataType.INTEGER)),
+	VARIABLE_DEFINE(EDataType.getModifierTypes() + "\\s*" + MatchUtil.NAME + "\\s*=[^=]", new AssignmentParser(), null),
+	ASSIGNMENT(MatchUtil.NAME + "\\s*=[^=]", new AssignmentParser(), null),
+	PARAMETER_DEFINE(EDataType.getModifierTypes() + "\\s*" + MatchUtil.NAME, null, null),
+	VARIABLE(MatchUtil.NAME, null, new VariableParser()),
 	ARGUMENT_SEPERATOR(",", null, null);
 	
 	Pattern pattern;
@@ -56,19 +60,5 @@ public enum EToken
 	public void closeExpression(Token t, VirtualCode vcode)
 	{
 		exprParser.closeExpression(t, vcode);
-	}
-	
-	static class Util
-	{
-		static String
-			BOOLEAN =	"(true|false)\\b(?!\\.)",
-			NAME =		"([a-zA-Z_][a-zA-Z0-9_\\.]*)",
-			FLOAT = 	"(\\d*\\.\\d+|\\d+\\.\\d*)",
-			INT = 		"\\d+";
-				
-		public static String keyword(String key)
-		{
-			return key+"\\b(?!\\.)";
-		}
 	}
 }

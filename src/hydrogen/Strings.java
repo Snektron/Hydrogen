@@ -15,7 +15,9 @@ public enum Strings
 	TOKEN_ERROR("Error under token %s."),
 	FUNCTION_REDEFINITION("Duplicate function %s"),
 	UNRESOLVED_FUNCTION_ERROR("Function %s can not be found."),
-	END_OF_FILE("Unexpected end of file.");
+	END_OF_FILE("Unexpected end of file."),
+	ERROR("Unexpected error."),
+	DATATYPE_PARSE_ERROR("Sequence '%s' is not a data type.");
 	
 	public String msg;
 	

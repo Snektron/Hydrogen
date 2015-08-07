@@ -54,7 +54,12 @@ public class Tokenizer
 				return new Token(tokens[i], m.group());
 		}
 		
-		throw new TokenizeError(Strings.UNEXPECTED_INPUT.f(code.substring(0, code.length() > 20 ? 20 : code.length()-1)));
+		throw new TokenizeError(Strings.UNEXPECTED_INPUT.f(getErrorCode()));
+	}
+	
+	public String getErrorCode()
+	{
+		return code.substring(0, code.length() > 20 ? 20 : code.length()-1);
 	}
 	
 	public boolean hasCode()

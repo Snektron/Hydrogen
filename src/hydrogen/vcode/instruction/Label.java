@@ -1,5 +1,7 @@
 package hydrogen.vcode.instruction;
 
+import hydrogen.vcode.VirtualCode;
+
 public class Label extends Instruction
 {
 	/**
@@ -11,5 +13,10 @@ public class Label extends Instruction
 	public Label(String name)
 	{
 		this.name = name;
+	}
+	
+	public String toString(VirtualCode vcode)
+	{
+		return getClass().getSimpleName() + " " + name;
 	}
 }

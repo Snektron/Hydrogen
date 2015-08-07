@@ -99,7 +99,7 @@ public class VariableAllocator
 		throw new ParseError(Strings.UNRESOLVED_VARIABLE_ERROR.f(name));
 	}
 	
-	public Variable getById(int id)
+	public Variable get(int id)
 	{
 		return variables.get(id);
 	}

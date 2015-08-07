@@ -10,10 +10,11 @@ public class OperatorParser implements IExpressionParser
 {
 	@Override
 	public void parse(VirtualCode vcode)
-	{
+	{		
 		EOperator o1 = EOperator.getOperator(vcode.currentToken());
 		
 		if (o1 == EOperator.MINUS)
+		{
 			if (vcode.prevToken().is(EToken.BOOLEAN) || 
 				vcode.prevToken().is(EToken.INTEGER) || 
 				vcode.prevToken().is(EToken.FLOAT) || 
@@ -22,6 +23,8 @@ public class OperatorParser implements IExpressionParser
 				vcode.currentToken().sequence = EOperator.SUBTRACT.regex;
 			else
 				vcode.currentToken().sequence = EOperator.NEGATION.regex;
+			o1 = EOperator.getOperator(vcode.currentToken());
+		}
 		
 		EOperator o2;
 		

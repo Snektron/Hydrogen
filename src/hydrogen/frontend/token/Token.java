@@ -39,6 +39,14 @@ public class Token
 		return token == other;
 	}
 	
+	public boolean isOneOf(EToken... others)
+	{
+		for (int i = 0; i < others.length; i++)
+			if (is(others[i]))
+				return true;
+		return false;
+	}
+	
 	public boolean allowedInExpression()
 	{
 		return !(token.exprParser instanceof IllegalTokenParser);

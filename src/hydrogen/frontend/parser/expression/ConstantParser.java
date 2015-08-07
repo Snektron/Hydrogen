@@ -1,7 +1,5 @@
 package hydrogen.frontend.parser.expression;
 
-import hydrogen.Strings;
-import hydrogen.frontend.error.ParseError;
 import hydrogen.frontend.token.EDataType;
 import hydrogen.frontend.token.Token;
 import hydrogen.vcode.VirtualCode;
@@ -25,6 +23,6 @@ public class ConstantParser implements IExpressionParser
 	@Override
 	public void closeExpression(Token token, VirtualCode vcode)
 	{
-		throw new ParseError(Strings.TOKEN_ERROR.f(token.name()));
+		
 	}
 }

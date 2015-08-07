@@ -1,6 +1,7 @@
 package hydrogen.vcode.instruction;
 
 import hydrogen.frontend.token.EOperator;
+import hydrogen.vcode.VirtualCode;
 
 public class Operation extends Instruction
 {
@@ -19,7 +20,7 @@ public class Operation extends Instruction
 	}
 	
 	@Override
-	public String toString()
+	public String toString(VirtualCode vcode)
 	{
 		return getClass().getSimpleName() + " " + operator.name();
 	}

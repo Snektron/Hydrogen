@@ -1,5 +1,8 @@
 package hydrogen.frontend.token;
 
+import hydrogen.Strings;
+import hydrogen.frontend.error.ParseError;
+
 public enum EDataType
 {
 	//TODO sizes in bytes
@@ -62,5 +65,15 @@ public enum EDataType
 		for (int i=0; i<values().length; i++)
 			sb.insert(0, values()[i].syntax).insert(0, "|");
 		return "(" + sb.substring(1).toString();
+	}
+	
+	public static EDataType getDataType(String seq)
+	{
+		for (int i=0; i<values().length; i++)
+			if (seq.matches(values()[i].syntax))
+				return values()[i];
+		
+		// this shouldn't happen
+		throw new ParseError(Strings.DATATYPE_PARSE_ERROR.f(seq));
 	}
 }

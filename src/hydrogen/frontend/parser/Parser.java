@@ -31,7 +31,7 @@ public class Parser
 		for (int i = 0; i<vcode.vcode().size(); i++)
 		{
 			inst = vcode.vcode().get(i);
-			Log.d(i + ": " + inst.toString());
+			Log.d(i + ": " + inst.toString(vcode));
 		}
 	}
 }

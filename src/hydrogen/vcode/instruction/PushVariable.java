@@ -1,5 +1,7 @@
 package hydrogen.vcode.instruction;
 
+import hydrogen.vcode.VirtualCode;
+
 public class PushVariable extends Instruction
 {
 	/**
@@ -13,5 +15,10 @@ public class PushVariable extends Instruction
 	public PushVariable(int variableID)
 	{
 		this.variableID = variableID;
+	}
+	
+	public String toString(VirtualCode vcode)
+	{
+		return getClass().getSimpleName() + " " + vcode.valloc().get(variableID).name;
 	}
 }

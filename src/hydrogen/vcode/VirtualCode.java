@@ -86,4 +86,9 @@ public class VirtualCode
 	{
 		return tokenizer.hasCode();
 	}
+	
+	public String getErrorCode()
+	{
+		return tokenizer.getErrorCode();
+	}
 }

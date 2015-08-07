@@ -39,6 +39,11 @@ public enum EOperator
 		this.canMatch = canMatch;
 	}
 	
+	public boolean isLeftAssociative()
+	{
+		return associativity == Associativity.LEFT;
+	}
+	
 	public static boolean comparePrecedence(EOperator o1, EOperator o2)
 	{
 		return (o1.associativity == Associativity.LEFT && o1.precedence <= o2.precedence) || (o1.associativity == Associativity.RIGHT && o1.precedence < o2.precedence);
@@ -64,6 +69,11 @@ public enum EOperator
 			if (values()[i].canMatch)
 				sb.insert(0, values()[i].regex).insert(0, "|");
 		return "(" + sb.substring(1).toString();
+	}
+	
+	public static boolean allowedAfterOperator(Token tok)
+	{
+		return !(tok.is(EToken.OPERATOR) && getOperator(tok).isLeftAssociative());
 	}
 	
 	public enum Associativity

@@ -8,15 +8,15 @@ public class PushConstant extends Instruction
 	 * This instruction pushes a constant variable to the stack.
 	 */
 	
-	public int constantID;
+	public int constant;
 	
-	public PushConstant(int constantID)
+	public PushConstant(int constant)
 	{
-		this.constantID = constantID;
+		this.constant = constant;
 	}
 	
 	public String toString(VirtualCode vcode)
 	{
-		return getClass().getSimpleName() + " " + vcode.calloc().get(constantID).value;
+		return getClass().getSimpleName() + " " + constant;
 	}
 }

@@ -7,7 +7,6 @@ import hydrogen.Strings;
 import hydrogen.frontend.error.ParseError;
 import hydrogen.frontend.error.RedefinitionError;
 import hydrogen.frontend.error.UnresolvedVariableError;
-import hydrogen.frontend.token.EDataType;
 import hydrogen.frontend.token.ELocationType;
 
 public class VariableAllocator
@@ -73,13 +72,13 @@ public class VariableAllocator
 		return false;
 	}
 	
-	public int register(EDataType dataType, String name)
+	public int register(String name)
 	{
 		if (isReachable(name))
 			throw new RedefinitionError(Strings.VARIABLE_REDEFINITION.f(name));
 		
 		ELocationType locationType = inFunction ? ELocationType.GLOBAL : ELocationType.LOCAL;
-		variables.add(new Variable(locationType, dataType, name, getBlocks().peek().id, getBlocks().peek().nextLocation()));
+		variables.add(new Variable(locationType, name, getBlocks().peek().id, getBlocks().peek().nextLocation()));
 		return variables.size()-1;
 	}
 	

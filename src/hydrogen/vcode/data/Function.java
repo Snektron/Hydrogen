@@ -1,13 +1,11 @@
 package hydrogen.vcode.data;
 
-import hydrogen.frontend.token.EDataType;
-
 public class Function
 {
 	String name;
 	int arguments;
 	
-	public Function(String name, int arguments, EDataType returnType)
+	public Function(String name, int arguments)
 	{
 		this.name = name;
 		this.arguments = arguments;

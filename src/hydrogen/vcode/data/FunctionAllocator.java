@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import hydrogen.Strings;
 import hydrogen.frontend.error.ParseError;
 import hydrogen.frontend.error.RedefinitionError;
-import hydrogen.frontend.token.EDataType;
 
 public class FunctionAllocator
 {
@@ -16,12 +15,12 @@ public class FunctionAllocator
 		functions = new ArrayList<Function>();
 	}
 	
-	public int register(String name, EDataType returnType, int arguments)
+	public int register(String name, int arguments)
 	{
 		if (isRegistered(name, arguments))
 			throw new RedefinitionError(Strings.FUNCTION_REDEFINITION.f(name));
 		
-		functions.add(new Function(name, arguments, returnType));
+		functions.add(new Function(name, arguments));
 		return functions.size()-1;
 	}
 	

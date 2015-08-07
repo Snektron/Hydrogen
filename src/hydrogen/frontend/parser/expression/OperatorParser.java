@@ -15,10 +15,9 @@ public class OperatorParser implements IExpressionParser
 		
 		if (o1 == EOperator.MINUS)
 		{
-			if (vcode.prevToken().is(EToken.BOOLEAN) || 
-				vcode.prevToken().is(EToken.INTEGER) || 
-				vcode.prevToken().is(EToken.FLOAT) || 
-				vcode.prevToken().is(EToken.VARIABLE) || 
+			if (vcode.prevToken().is(EToken.BOOLEAN) ||
+				vcode.prevToken().is(EToken.INTEGER) ||
+				vcode.prevToken().is(EToken.VARIABLE) ||
 				vcode.prevToken().is(EToken.BRACKET_CLOSE))
 				vcode.currentToken().sequence = EOperator.SUBTRACT.regex;
 			else

@@ -17,21 +17,18 @@ import hydrogen.vcode.VirtualCode;
 
 public enum EToken
 {	
-	BOOLEAN(MatchUtil.BOOLEAN, null, new ConstantParser(EDataType.BOOLEAN)),
+	BOOLEAN(MatchUtil.BOOLEAN, null, null),
 	RETURN(MatchUtil.keyword("return"), null, null),
 	IF("if\\s*\\(", null, null),
 	ELSE(MatchUtil.keyword("else"), null, null),
 	END(MatchUtil.keyword("end"), null, null),
 	BRACKET_OPEN("\\(", null, new BracketOpenParser()),
 	BRACKET_CLOSE("\\)", null, new BracketCloseParser()),
-	FUNCTION_DEFINE(EDataType.getReturnTypes() + "\\s*" + MatchUtil.NAME + "\\s*\\(", null, null),
+	FUNCTION_DEFINE("function\\s+" + MatchUtil.NAME + "\\s*\\(", null, null),
 	CALL(MatchUtil.NAME + "\\s*\\(", null, new BracketOpenParser()),
 	OPERATOR(EOperator.getOperators(), null, new OperatorParser()),
-	FLOAT(MatchUtil.FLOAT, null, new ConstantParser(EDataType.FLOAT)),
-	INTEGER(MatchUtil.INT, null, new ConstantParser(EDataType.INTEGER)),
-	VARIABLE_DEFINE(EDataType.getModifierTypes() + "\\s*" + MatchUtil.NAME + "\\s*=[^=]", new AssignmentParser(), null),
+	INTEGER(MatchUtil.INT, null, new ConstantParser()),
 	ASSIGNMENT(MatchUtil.NAME + "\\s*=[^=]", new AssignmentParser(), null),
-	PARAMETER_DEFINE(EDataType.getModifierTypes() + "\\s*" + MatchUtil.NAME, null, null),
 	VARIABLE(MatchUtil.NAME, null, new VariableParser()),
 	ARGUMENT_SEPERATOR(",", null, null);
 	

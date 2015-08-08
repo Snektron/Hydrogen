@@ -23,6 +23,9 @@ public class FunctionDefineParser implements ITokenParser
 	@Override
 	public void parse(VirtualCode vcode)
 	{
+		if (vcode.valloc().inFunction())
+			throw new ParseError(Strings.FUNCTION_INSIDE_FUNCTION.msg);
+		
 		String lbl = nextLabel(functionID++);
 		vcode.add(new Jump(lbl, Condition.NONE));
 		

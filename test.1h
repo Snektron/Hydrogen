@@ -1,9 +1,3 @@
-function a(a)
-
+if (true)
+	
 end
-
-function a(a, b)
-
-end
-
-a(2)

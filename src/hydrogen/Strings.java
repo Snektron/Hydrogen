@@ -18,7 +18,8 @@ public enum Strings
 	END_OF_FILE("Unexpected end of file."),
 	ERROR("Unexpected error."),
 	DATATYPE_PARSE_ERROR("Sequence '%s' is not a data type."),
-	UNRESOLVED_FUNCTION("Unresolved function %s with %s arguments.");
+	UNRESOLVED_FUNCTION("Unresolved function %s with %s arguments."),
+	FUNCTION_INSIDE_FUNCTION("Can't have a function inside another.");
 	
 	public String msg;
 	

@@ -9,7 +9,11 @@ public class ConstantParser implements IExpressionParser
 	@Override
 	public void parse(VirtualCode vcode)
 	{
-		vcode.add(new PushConstant(Integer.parseInt(vcode.currentToken().sequence)));
+		String seq = vcode.currentToken().sequence;
+		if (seq.matches("true|false"))
+			vcode.add(new PushConstant(Boolean.parseBoolean(seq) ? 1 : 0));
+		else
+			vcode.add(new PushConstant(Integer.parseInt(seq)));
 	}
 
 	@Override

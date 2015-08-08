@@ -13,6 +13,7 @@ import hydrogen.frontend.parser.expression.OperatorParser;
 import hydrogen.frontend.parser.expression.VariableParser;
 import hydrogen.frontend.parser.token.AssignmentParser;
 import hydrogen.frontend.parser.token.ITokenParser;
+import hydrogen.frontend.parser.token.IfStatementParser;
 import hydrogen.frontend.parser.token.UnexpectedTokenParser;
 import hydrogen.vcode.VirtualCode;
 
@@ -20,7 +21,8 @@ public enum EToken
 {	
 	BOOLEAN(MatchUtil.BOOLEAN, null, new ConstantParser()),
 	RETURN(MatchUtil.keyword("return"), null, null),
-	IF("if\\s*\\(", null, null),
+	IF("if\\s*\\(", new IfStatementParser(), null),
+	ELSEIF("elseif\\s*\\(", null, null),
 	ELSE(MatchUtil.keyword("else"), null, null),
 	END(MatchUtil.keyword("end"), null, null),
 	BRACKET_OPEN("\\(", null, new BracketOpenParser()),

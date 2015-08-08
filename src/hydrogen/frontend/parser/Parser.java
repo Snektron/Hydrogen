@@ -13,20 +13,20 @@ public class Parser
 		VirtualCode vcode = new VirtualCode(t);
 		
 		vcode.nextToken();
-		while(vcode.hasCode())
-			parseNext(vcode);
 
+		while(true)
+		{
+			parseNext(vcode);
+			if (!vcode.hasCode())
+				break;
+		}
+		
 		return vcode;
 	}
 	
 	public static void parseNext(VirtualCode vcode)
 	{
-		while(true)
-		{
-			vcode.currentToken().parseToken(vcode);
-			if (!vcode.hasCode())
-				break;
-		}
+		vcode.currentToken().parseToken(vcode);
 	}
 	
 	public static void dump(VirtualCode vcode)

@@ -3,6 +3,8 @@ package hydrogen.vcode;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import hydrogen.Strings;
+import hydrogen.frontend.error.EndOfFileError;
 import hydrogen.frontend.token.Token;
 import hydrogen.frontend.token.Tokenizer;
 import hydrogen.vcode.data.FunctionAllocator;
@@ -55,6 +57,8 @@ public class VirtualCode
 	public Token nextToken()
 	{
 		lastToken = currentToken;
+		if (!hasCode())
+			throw new EndOfFileError(Strings.END_OF_FILE.msg);
 		currentToken = tokenizer.nextToken();
 		return currentToken;
 	}

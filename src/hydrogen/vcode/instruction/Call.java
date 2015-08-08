@@ -9,14 +9,16 @@ public class Call extends Instruction
 	 */
 	
 	String label;
+	int arguments;
 	
-	public Call(String label)
+	public Call(String label, int arguments)
 	{
 		this.label = label;
+		this.arguments = arguments;
 	}
 	
 	public String toString(VirtualCode vcode)
 	{
-		return getClass().getSimpleName() + " " + label;
+		return getClass().getSimpleName() + " " + label + " " + arguments;
 	}
 }

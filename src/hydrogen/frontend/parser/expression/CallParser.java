@@ -11,6 +11,7 @@ import hydrogen.frontend.parser.MatchUtil;
 import hydrogen.frontend.token.EToken;
 import hydrogen.frontend.token.Token;
 import hydrogen.vcode.VirtualCode;
+import hydrogen.vcode.data.FunctionAllocator;
 import hydrogen.vcode.instruction.Call;
 
 public class CallParser implements IExpressionParser
@@ -54,7 +55,7 @@ public class CallParser implements IExpressionParser
 		for (Token t:bOpStack)
 			vcode.opStack().push(new Token(t));
 		
-		vcode.add(new Call(name, arguments));
+		vcode.add(new Call(FunctionAllocator.makeLabel(name, arguments), arguments));
 	}
 
 	@Override

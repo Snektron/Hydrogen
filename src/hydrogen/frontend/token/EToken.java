@@ -12,6 +12,7 @@ import hydrogen.frontend.parser.expression.IllegalTokenParser;
 import hydrogen.frontend.parser.expression.OperatorParser;
 import hydrogen.frontend.parser.expression.VariableParser;
 import hydrogen.frontend.parser.token.AssignmentParser;
+import hydrogen.frontend.parser.token.FunctionDefineParser;
 import hydrogen.frontend.parser.token.ITokenParser;
 import hydrogen.frontend.parser.token.IfStatementParser;
 import hydrogen.frontend.parser.token.UnexpectedTokenParser;
@@ -27,7 +28,7 @@ public enum EToken
 	END(MatchUtil.keyword("end"), null, null),
 	BRACKET_OPEN("\\(", null, new BracketOpenParser()),
 	BRACKET_CLOSE("\\)", null, new BracketCloseParser()),
-	FUNCTION_DEFINE("function\\s+" + MatchUtil.NAME + "\\s*\\(", null, null),
+	FUNCTION_DEFINE("function\\s+" + MatchUtil.NAME + "\\s*\\(", new FunctionDefineParser(), null),
 	CALL(MatchUtil.NAME + "\\s*\\(", new CallParser(), new CallParser()),
 	OPERATOR(EOperator.getOperators(), null, new OperatorParser()),
 	INTEGER(MatchUtil.INT, null, new ConstantParser()),

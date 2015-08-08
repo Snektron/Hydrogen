@@ -37,11 +37,16 @@ public class FunctionAllocator
 		for (int i = 0; i < functions.size(); i++)
 			if (functions.get(i).is(name, arguments))
 				return i;
-		throw new ParseError(Strings.UNRESOLVED_FUNCTION_ERROR.f(name));
+		throw new ParseError(Strings.UNRESOLVED_FUNCTION.f(name, arguments+""));
 	}
 	
 	public Function get(int id)
 	{
 		return functions.get(id);
+	}
+	
+	public static String makeLabel(String name, int arguments)
+	{
+		return "FUNCTION_"+name+"_"+arguments;
 	}
 }

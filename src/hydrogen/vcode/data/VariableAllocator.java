@@ -34,13 +34,18 @@ public class VariableAllocator
 	public void openFunction()
 	{
 		inFunction = true;
-		localBlocks.empty();
+		localBlocks.clear();
 		localBlocks.push(new Block(0));
 	}
 	
 	public void closeFunction()
 	{
 		inFunction = false;
+	}
+	
+	public boolean inFunction()
+	{
+		return inFunction;
 	}
 	
 	// increase block depth
@@ -66,8 +71,10 @@ public class VariableAllocator
 			return false;
 		
 		for (Block block : getBlocks())
+		{
 			if (var.blockID == block.id)
 				return true;
+		}
 		
 		return false;
 	}

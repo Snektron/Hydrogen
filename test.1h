@@ -1,11 +1,9 @@
-a = 1
+function a(a)
 
-if (a == 1)
-	b = 1
-elseif (a == 2)
-	b = 2
-elseif (a == 3)
-	b = 3
-else
-	b = 4
 end
+
+function a(a, b)
+
+end
+
+a(2)

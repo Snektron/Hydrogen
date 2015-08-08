@@ -8,8 +8,8 @@ public class Call extends Instruction
 	 * Calls a specific label
 	 */
 	
-	String label;
-	int arguments;
+	public String label;
+	public int arguments;
 	
 	public Call(String label, int arguments)
 	{

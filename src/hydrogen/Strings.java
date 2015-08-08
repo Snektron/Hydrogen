@@ -15,10 +15,10 @@ public enum Strings
 	ILLEGAL_TOKEN("Illegal token %s in expression."),
 	TOKEN_ERROR("Error under token %s."),
 	FUNCTION_REDEFINITION("Duplicate function %s"),
-	UNRESOLVED_FUNCTION_ERROR("Function %s can not be found."),
 	END_OF_FILE("Unexpected end of file."),
 	ERROR("Unexpected error."),
-	DATATYPE_PARSE_ERROR("Sequence '%s' is not a data type.");
+	DATATYPE_PARSE_ERROR("Sequence '%s' is not a data type."),
+	UNRESOLVED_FUNCTION("Unresolved function %s with %s arguments.");
 	
 	public String msg;
 	

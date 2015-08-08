@@ -18,6 +18,6 @@ public class Function
 	
 	public boolean is(String otherName, int otherArguments)
 	{
-		return otherName.equals(otherName) && arguments == otherArguments;
+		return name.equals(otherName) && arguments == otherArguments;
 	}
 }

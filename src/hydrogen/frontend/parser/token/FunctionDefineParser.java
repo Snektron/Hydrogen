@@ -8,6 +8,7 @@ import hydrogen.frontend.error.ParseError;
 import hydrogen.frontend.error.SyntaxError;
 import hydrogen.frontend.parser.MatchUtil;
 import hydrogen.frontend.parser.Parser;
+import hydrogen.frontend.parser.expression.ExpressionParser;
 import hydrogen.frontend.token.EToken;
 import hydrogen.vcode.VirtualCode;
 import hydrogen.vcode.data.FunctionAllocator;
@@ -59,17 +60,39 @@ public class FunctionDefineParser implements ITokenParser
 		vcode.add(new Label(fname));
 		vcode.nextToken();
 		
-		while(!vcode.currentToken().is(EToken.END))
-			Parser.parseNext(vcode);
+		parseBlock(vcode);
 		
 		vcode.valloc().closeFunction();
 		
 		if (!vcode.currentToken().is(EToken.END))
 			throw new SyntaxError(Strings.UNEXPECTED_TOKEN_EXPECTED.f(vcode.currentToken().name(), EToken.END.name()));
-		vcode.add(new Return());
+		vcode.add(new Return(false));
 		vcode.add(new Label(lbl));
 		if (vcode.hasCode())
 			vcode.nextToken();
+	}
+	
+	private void parseBlock(VirtualCode vcode)
+	{
+		while(!vcode.currentToken().is(EToken.END))
+		{
+			if (vcode.currentToken().is(EToken.RETURN_VALUE))
+			{
+				vcode.nextToken();
+				ExpressionParser.parse(vcode);
+				vcode.add(new Return(true));
+				if (!vcode.currentToken().is(EToken.BRACKET_CLOSE))
+					throw new SyntaxError(Strings.UNEXPECTED_TOKEN.f(vcode.currentToken().name()));
+				vcode.nextToken();
+				continue;
+			}else if(vcode.currentToken().is(EToken.RETURN))
+			{
+				vcode.add(new Return(false));
+				vcode.nextToken();
+				continue;
+			}
+			Parser.parseNext(vcode);
+		}
 	}
 	
 	private String nextLabel(int id)

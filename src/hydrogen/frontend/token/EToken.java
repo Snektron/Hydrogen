@@ -21,11 +21,12 @@ import hydrogen.vcode.VirtualCode;
 public enum EToken
 {	
 	BOOLEAN(MatchUtil.BOOLEAN, null, new ConstantParser()),
-	RETURN(MatchUtil.keyword("return"), null, null),
+	RETURN_VALUE("return\\s*\\(", null, null),
+	RETURN("return", null, null),
 	IF("if\\s*\\(", new IfStatementParser(), null),
 	ELSEIF("elseif\\s*\\(", null, null),
-	ELSE(MatchUtil.keyword("else"), null, null),
-	END(MatchUtil.keyword("end"), null, null),
+	ELSE("else", null, null),
+	END("end", null, null),
 	BRACKET_OPEN("\\(", null, new BracketOpenParser()),
 	BRACKET_CLOSE("\\)", null, new BracketCloseParser()),
 	FUNCTION_DEFINE("function\\s+" + MatchUtil.NAME + "\\s*\\(", new FunctionDefineParser(), null),

@@ -15,12 +15,12 @@ public class FunctionAllocator
 		functions = new ArrayList<Function>();
 	}
 	
-	public int register(String name, int arguments)
+	public int register(String name, int arguments, boolean returnsValue)
 	{
 		if (isRegistered(name, arguments))
 			throw new RedefinitionError(Strings.FUNCTION_REDEFINITION.f(name));
 		
-		functions.add(new Function(name, arguments));
+		functions.add(new Function(name, arguments, returnsValue));
 		return functions.size()-1;
 	}
 	

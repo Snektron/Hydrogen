@@ -1,5 +1,6 @@
 package hydrogen.frontend.parser.token;
 
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,7 @@ import hydrogen.frontend.parser.expression.ExpressionParser;
 import hydrogen.frontend.token.EToken;
 import hydrogen.vcode.VirtualCode;
 import hydrogen.vcode.data.FunctionAllocator;
+import hydrogen.vcode.instruction.PopVariable;
 import hydrogen.vcode.instruction.Jump;
 import hydrogen.vcode.instruction.Jump.Condition;
 import hydrogen.vcode.instruction.Label;
@@ -42,11 +44,14 @@ public class FunctionDefineParser implements ITokenParser
 		
 		int arguments = 0;
 		
+		Stack<Integer> parameters = new Stack<Integer>();
+		
 		while (vcode.currentToken().is(EToken.VARIABLE))
 		{
-			vcode.valloc().register(vcode.currentToken().sequence);
+			parameters.push(vcode.valloc().register(vcode.currentToken().sequence));
 			arguments++;
 			vcode.nextToken();
+			
 			if (vcode.currentToken().is(EToken.BRACKET_CLOSE))
 				break;
 			else if (!vcode.currentToken().is(EToken.ARGUMENT_SEPERATOR))
@@ -55,12 +60,17 @@ public class FunctionDefineParser implements ITokenParser
 		}
 		if (!vcode.currentToken().is(EToken.BRACKET_CLOSE))
 			throw new SyntaxError(Strings.UNEXPECTED_TOKEN.f(vcode.currentToken().name()));
+		
+		
 		String fname = FunctionAllocator.makeLabel(name, arguments);
-		vcode.falloc().register(fname, arguments);
 		vcode.add(new Label(fname));
 		vcode.nextToken();
 		
-		parseBlock(vcode);
+		while(!parameters.empty())
+			vcode.add(new PopVariable(parameters.pop()));
+		
+		boolean returnsValue = parseBlock(vcode);
+		vcode.falloc().register(fname, arguments, returnsValue);
 		
 		vcode.valloc().closeFunction();
 		
@@ -72,12 +82,17 @@ public class FunctionDefineParser implements ITokenParser
 			vcode.nextToken();
 	}
 	
-	private void parseBlock(VirtualCode vcode)
+	private boolean parseBlock(VirtualCode vcode)
 	{
+		Boolean returnsValue = null;
+		
 		while(!vcode.currentToken().is(EToken.END))
 		{
 			if (vcode.currentToken().is(EToken.RETURN_VALUE))
 			{
+				if (returnsValue != null && returnsValue == false)
+					throw new ParseError(Strings.ERROR.msg);
+				returnsValue = true;
 				vcode.nextToken();
 				ExpressionParser.parse(vcode);
 				vcode.add(new Return(true));
@@ -87,12 +102,19 @@ public class FunctionDefineParser implements ITokenParser
 				continue;
 			}else if(vcode.currentToken().is(EToken.RETURN))
 			{
+				if (returnsValue != null && returnsValue == true)
+					throw new ParseError(Strings.ERROR.msg);
+				returnsValue = false;
 				vcode.add(new Return(false));
 				vcode.nextToken();
 				continue;
 			}
 			Parser.parseNext(vcode);
 		}
+		if (returnsValue == null)
+			returnsValue = false;
+		
+		return returnsValue.booleanValue();
 	}
 	
 	private String nextLabel(int id)

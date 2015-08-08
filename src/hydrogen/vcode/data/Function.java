@@ -2,13 +2,15 @@ package hydrogen.vcode.data;
 
 public class Function
 {
-	String name;
-	int arguments;
+	public String name;
+	public int arguments;
+	public boolean returnsValue;
 	
-	public Function(String name, int arguments)
+	public Function(String name, int arguments, boolean returnsValue)
 	{
 		this.name = name;
 		this.arguments = arguments;
+		this.returnsValue = returnsValue;
 	}
 	
 	public boolean is(Function f)

@@ -30,7 +30,7 @@ public enum EToken
 	BRACKET_OPEN("\\(", null, new BracketOpenParser()),
 	BRACKET_CLOSE("\\)", null, new BracketCloseParser()),
 	FUNCTION_DEFINE("function\\s+" + MatchUtil.NAME + "\\s*\\(", new FunctionDefineParser(), null),
-	CALL(MatchUtil.NAME + "\\s*\\(", new CallParser(), new CallParser()),
+	CALL(MatchUtil.NAME + "\\s*\\(", new CallParser(false), new CallParser(true)),
 	OPERATOR(EOperator.getOperators(), null, new OperatorParser()),
 	INTEGER(MatchUtil.INT, null, new ConstantParser()),
 	ASSIGNMENT(MatchUtil.NAME + "\\s*=[^=]", new AssignmentParser(), null),

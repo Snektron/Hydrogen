@@ -16,6 +16,13 @@ import hydrogen.vcode.instruction.Call;
 
 public class CallParser implements IExpressionParser
 {
+	public boolean expectsValue;
+	
+	public CallParser(boolean expectsValue)
+	{
+		this.expectsValue = expectsValue;
+	}
+	
 	@Override
 	public void parse(VirtualCode vcode)
 	{
@@ -55,7 +62,7 @@ public class CallParser implements IExpressionParser
 		for (Token t:bOpStack)
 			vcode.opStack().push(new Token(t));
 		
-		vcode.add(new Call(FunctionAllocator.makeLabel(name, arguments), arguments));
+		vcode.add(new Call(FunctionAllocator.makeLabel(name, arguments), arguments, expectsValue));
 	}
 
 	@Override

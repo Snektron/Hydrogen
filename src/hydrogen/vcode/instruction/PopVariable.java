@@ -2,7 +2,7 @@ package hydrogen.vcode.instruction;
 
 import hydrogen.vcode.VirtualCode;
 
-public class Assignment extends Instruction
+public class PopVariable extends Instruction
 {
 	
 	/**
@@ -11,7 +11,7 @@ public class Assignment extends Instruction
 	
 	int variableID;
 	
-	public Assignment(int variableID)
+	public PopVariable(int variableID)
 	{
 		this.variableID = variableID;
 	}

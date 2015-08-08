@@ -8,7 +8,7 @@ import hydrogen.frontend.error.ParseError;
 import hydrogen.frontend.parser.MatchUtil;
 import hydrogen.frontend.parser.expression.ExpressionParser;
 import hydrogen.vcode.VirtualCode;
-import hydrogen.vcode.instruction.Assignment;
+import hydrogen.vcode.instruction.PopVariable;
 
 public class AssignmentParser implements ITokenParser
 {
@@ -28,6 +28,6 @@ public class AssignmentParser implements ITokenParser
 		if (!vcode.valloc().isReachable(name))
 			vcode.valloc().register(name);
 		
-		vcode.add(new Assignment(vcode.valloc().getByName(name)));
+		vcode.add(new PopVariable(vcode.valloc().getByName(name)));
 	}
 }

@@ -2,9 +2,11 @@ package hydrogen.frontend.parser;
 
 import hydrogen.Log;
 import hydrogen.Strings;
+import hydrogen.frontend.error.SyntaxError;
 import hydrogen.frontend.error.UnresolvedFunctionError;
 import hydrogen.frontend.token.Tokenizer;
 import hydrogen.vcode.VirtualCode;
+import hydrogen.vcode.data.Function;
 import hydrogen.vcode.instruction.Call;
 import hydrogen.vcode.instruction.Instruction;
 
@@ -38,10 +40,14 @@ public class Parser
 		for (Instruction i:vcode.vcode())
 			if (i instanceof Call)
 			{
-				String fname = ((Call) i).label;
-				int arguments = ((Call) i).arguments;
-				if (!vcode.falloc().isRegistered(fname, arguments))
-					throw new UnresolvedFunctionError(Strings.UNRESOLVED_FUNCTION.f(fname, arguments+""));
+				Call call = (Call) i;
+				String name = call.label;
+				int arguments = call.arguments;
+				if (!vcode.falloc().isRegistered(name, arguments))
+					throw new UnresolvedFunctionError(Strings.UNRESOLVED_FUNCTION.f(name, arguments+""));
+				Function f = vcode.falloc().get(vcode.falloc().getByNameAndArgs(name, arguments));
+				if (call.expectsReturn && !f.returnsValue)
+					throw new SyntaxError(Strings.RETURN_EXPECTED.f(name));
 			}
 	}
 	

@@ -10,15 +10,17 @@ public class Call extends Instruction
 	
 	public String label;
 	public int arguments;
+	public boolean expectsReturn;
 	
-	public Call(String label, int arguments)
+	public Call(String label, int arguments, boolean expectsReturn)
 	{
 		this.label = label;
 		this.arguments = arguments;
+		this.expectsReturn = expectsReturn;
 	}
 	
 	public String toString(VirtualCode vcode)
 	{
-		return getClass().getSimpleName() + " " + label + " " + arguments;
+		return getClass().getSimpleName() + " " + label + " " + arguments + " " + expectsReturn;
 	}
 }

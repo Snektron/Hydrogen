@@ -42,7 +42,7 @@ public class CallParser implements IExpressionParser
 		
 		vcode.nextToken();
 		
-		if (!(vcode.currentToken().is(EToken.BRACKET_CLOSE)))
+		if (!vcode.currentToken().is(EToken.BRACKET_CLOSE))
 		{
 			ExpressionParser.parse(vcode);
 			arguments = 1;
@@ -53,10 +53,12 @@ public class CallParser implements IExpressionParser
 				ExpressionParser.parse(vcode);
 				arguments++;
 			}
-		
-			if (!(vcode.currentToken().is(EToken.BRACKET_CLOSE)))
-				throw new SyntaxError(vcode.getErrorCode());
 		}
+		
+		if (!vcode.currentToken().is(EToken.BRACKET_CLOSE))
+			throw new SyntaxError(vcode.getErrorCode());
+		if (vcode.hasCode())
+			vcode.nextToken();
 		
 		vcode.opStack().clear();
 		for (Token t:bOpStack)

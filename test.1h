@@ -1,5 +1,11 @@
-function a(a, b)
-	return(a+b)
+function a()
+	a = 2
+	a = 3
+	b()
 end
 
-a = a(2, 3)
+function b()
+	a = 2
+end
+
+a()

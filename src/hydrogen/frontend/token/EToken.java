@@ -15,6 +15,7 @@ import hydrogen.frontend.parser.token.AssignmentParser;
 import hydrogen.frontend.parser.token.FunctionDefineParser;
 import hydrogen.frontend.parser.token.ITokenParser;
 import hydrogen.frontend.parser.token.IfStatementParser;
+import hydrogen.frontend.parser.token.RepeatLoopParser;
 import hydrogen.frontend.parser.token.UnexpectedTokenParser;
 import hydrogen.frontend.parser.token.WhileLoopParser;
 import hydrogen.vcode.VirtualCode;
@@ -25,6 +26,7 @@ public enum EToken
 	RETURN_VALUE("return\\s*\\(", null, null),
 	RETURN("return", null, null),
 	WHILE("while\\s*\\(", new WhileLoopParser(), null),
+	REPEAT("repeat\\s*\\(", new RepeatLoopParser(), null),
 	IF("if\\s*\\(", new IfStatementParser(), null),
 	ELSEIF("elseif\\s*\\(", null, null),
 	ELSE("else", null, null),
@@ -45,7 +47,7 @@ public enum EToken
 	
 	EToken(String regex, ITokenParser tokParser, IExpressionParser exprParser)
 	{
-		pattern = Pattern.compile("^("+regex+")");
+		pattern = Pattern.compile("^("+regex+")", Pattern.CASE_INSENSITIVE);
 		
 		this.tokParser = tokParser == null ? new UnexpectedTokenParser() : tokParser;
 		this.exprParser = exprParser == null ? new IllegalTokenParser() : exprParser;

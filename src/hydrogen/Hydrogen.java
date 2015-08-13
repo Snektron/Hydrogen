@@ -8,7 +8,6 @@ import hydrogen.frontend.parser.Parser;
 
 public class Hydrogen
 {
-	
 	public static void compile(String file)
 	{		
 		try {

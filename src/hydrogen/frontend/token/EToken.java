@@ -16,6 +16,7 @@ import hydrogen.frontend.parser.token.FunctionDefineParser;
 import hydrogen.frontend.parser.token.ITokenParser;
 import hydrogen.frontend.parser.token.IfStatementParser;
 import hydrogen.frontend.parser.token.UnexpectedTokenParser;
+import hydrogen.frontend.parser.token.WhileLoopParser;
 import hydrogen.vcode.VirtualCode;
 
 public enum EToken
@@ -23,6 +24,7 @@ public enum EToken
 	BOOLEAN(MatchUtil.BOOLEAN, null, new ConstantParser()),
 	RETURN_VALUE("return\\s*\\(", null, null),
 	RETURN("return", null, null),
+	WHILE("while\\s*\\(", new WhileLoopParser(), null),
 	IF("if\\s*\\(", new IfStatementParser(), null),
 	ELSEIF("elseif\\s*\\(", null, null),
 	ELSE("else", null, null),

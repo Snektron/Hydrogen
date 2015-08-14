@@ -6,17 +6,17 @@ import java.util.regex.Pattern;
 
 import hydrogen.Strings;
 import hydrogen.frontend.error.ParseError;
-import hydrogen.frontend.error.SyntaxError;
 import hydrogen.frontend.parser.MatchUtil;
+import hydrogen.frontend.parser.ParseUtil;
 import hydrogen.frontend.parser.Parser;
 import hydrogen.frontend.parser.expression.ExpressionParser;
 import hydrogen.frontend.token.EToken;
 import hydrogen.vcode.VirtualCode;
 import hydrogen.vcode.data.FunctionAllocator;
-import hydrogen.vcode.instruction.PopVariable;
 import hydrogen.vcode.instruction.Jump;
 import hydrogen.vcode.instruction.Jump.Condition;
 import hydrogen.vcode.instruction.Label;
+import hydrogen.vcode.instruction.PopVariable;
 import hydrogen.vcode.instruction.Return;
 
 public class FunctionDefineParser implements ITokenParser
@@ -54,12 +54,10 @@ public class FunctionDefineParser implements ITokenParser
 			
 			if (vcode.currentToken().is(EToken.BRACKET_CLOSE))
 				break;
-			else if (!vcode.currentToken().is(EToken.ARGUMENT_SEPERATOR))
-				throw new SyntaxError(Strings.UNEXPECTED_TOKEN.f(vcode.currentToken().name()));
+			ParseUtil.checkToken(vcode, EToken.ARGUMENT_SEPERATOR);
 			vcode.nextToken();
 		}
-		if (!vcode.currentToken().is(EToken.BRACKET_CLOSE))
-			throw new SyntaxError(Strings.UNEXPECTED_TOKEN.f(vcode.currentToken().name()));
+		ParseUtil.checkToken(vcode, EToken.BRACKET_CLOSE);
 		
 		
 		String fname = FunctionAllocator.makeLabel(name, arguments);
@@ -74,8 +72,8 @@ public class FunctionDefineParser implements ITokenParser
 		
 		vcode.valloc().closeFunction();
 		
-		if (!vcode.currentToken().is(EToken.END))
-			throw new SyntaxError(Strings.UNEXPECTED_TOKEN_EXPECTED.f(vcode.currentToken().name(), EToken.END.name()));
+		ParseUtil.checkToken(vcode, EToken.END);
+		
 		vcode.add(new Return(false));
 		vcode.add(new Label(lbl));
 		if (vcode.hasCode())
@@ -96,8 +94,7 @@ public class FunctionDefineParser implements ITokenParser
 				vcode.nextToken();
 				ExpressionParser.parse(vcode);
 				vcode.add(new Return(true));
-				if (!vcode.currentToken().is(EToken.BRACKET_CLOSE))
-					throw new SyntaxError(Strings.UNEXPECTED_TOKEN.f(vcode.currentToken().name()));
+				ParseUtil.checkToken(vcode, EToken.BRACKET_CLOSE);
 				vcode.nextToken();
 				continue;
 			}else if(vcode.currentToken().is(EToken.RETURN))

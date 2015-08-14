@@ -18,7 +18,7 @@ public class ExpressionParser
 			if (!vcode.hasCode())
 				break;
 			Token next = vcode.nextToken();
-			
+
 			if (vcode.prevToken().isOneOf(EToken.OPERATOR, EToken.BRACKET_OPEN, EToken.CALL, EToken.ARGUMENT_SEPERATOR))
 			{
 				if (!EOperator.allowedAfterOperator(next) || !next.allowedInExpression())

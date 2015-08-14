@@ -16,13 +16,7 @@ public class AssignmentParser implements ITokenParser
 	@Override
 	public void parse(VirtualCode vcode)
 	{	
-		String seq = vcode.currentToken().sequence;
-		
-		Matcher m = Pattern.compile(MatchUtil.NAME).matcher(seq);
-		if (!m.find())
-			throw new ParseError(Strings.ERROR.msg);
-		String name = m.group();
-		
+		String name = getName(vcode);
 		vcode.nextToken();
 		ExpressionParser.parse(vcode);
 		
@@ -33,5 +27,15 @@ public class AssignmentParser implements ITokenParser
 		}
 		
 		vcode.add(new PopVariable(vcode.valloc().getByName(name)));
+	}
+	
+	public static String getName(VirtualCode vcode)
+	{
+		String seq = vcode.currentToken().sequence;
+		
+		Matcher m = Pattern.compile(MatchUtil.NAME).matcher(seq);
+		if (!m.find())
+			throw new ParseError(Strings.ERROR.msg);
+		return m.group();
 	}
 }

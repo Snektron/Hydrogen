@@ -12,6 +12,7 @@ import hydrogen.frontend.parser.expression.IllegalTokenParser;
 import hydrogen.frontend.parser.expression.OperatorParser;
 import hydrogen.frontend.parser.expression.VariableParser;
 import hydrogen.frontend.parser.token.AssignmentParser;
+import hydrogen.frontend.parser.token.ForLoopParser;
 import hydrogen.frontend.parser.token.FunctionDefineParser;
 import hydrogen.frontend.parser.token.ITokenParser;
 import hydrogen.frontend.parser.token.IfStatementParser;
@@ -25,6 +26,7 @@ public enum EToken
 	BOOLEAN(MatchUtil.BOOLEAN, null, new ConstantParser()),
 	RETURN_VALUE("return\\s*\\(", null, null),
 	RETURN("return", null, null),
+	FOR("for\\s*\\(", new ForLoopParser(), null),
 	WHILE("while\\s*\\(", new WhileLoopParser(), null),
 	REPEAT("repeat\\s*\\(", new RepeatLoopParser(), null),
 	IF("if\\s*\\(", new IfStatementParser(), null),
@@ -37,7 +39,7 @@ public enum EToken
 	CALL(MatchUtil.NAME + "\\s*\\(", new CallParser(false), new CallParser(true)),
 	OPERATOR(EOperator.getOperators(), null, new OperatorParser()),
 	INTEGER(MatchUtil.INT, null, new ConstantParser()),
-	ASSIGNMENT(MatchUtil.NAME + "\\s*=[^=]", new AssignmentParser(), null),
+	ASSIGNMENT(MatchUtil.NAME + "\\s*=", new AssignmentParser(), null),
 	VARIABLE(MatchUtil.NAME, null, new VariableParser()),
 	ARGUMENT_SEPERATOR(",", null, null);
 	

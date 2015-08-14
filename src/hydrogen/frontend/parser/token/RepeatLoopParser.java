@@ -1,13 +1,11 @@
 package hydrogen.frontend.parser.token;
 
-import hydrogen.Strings;
-import hydrogen.frontend.error.SyntaxError;
 import hydrogen.frontend.parser.ParseUtil;
 import hydrogen.frontend.token.EToken;
 import hydrogen.vcode.VirtualCode;
 import hydrogen.vcode.instruction.Jump;
-import hydrogen.vcode.instruction.Label;
 import hydrogen.vcode.instruction.Jump.Condition;
+import hydrogen.vcode.instruction.Label;
 
 public class RepeatLoopParser implements ITokenParser
 {
@@ -27,8 +25,7 @@ public class RepeatLoopParser implements ITokenParser
 		vcode.add(new Jump(endLabel, Condition.TRUE));
 		
 		ParseUtil.parseBlock(vcode, EToken.END);
-		if (!vcode.currentToken().is(EToken.END))
-			throw new SyntaxError(Strings.UNEXPECTED_TOKEN_EXPECTED.f(vcode.currentToken().name(), EToken.END.name()));
+		ParseUtil.checkToken(vcode, EToken.END);
 		
 		vcode.add(new Jump(frontLabel, Condition.NONE));
 		vcode.add(new Label(endLabel));

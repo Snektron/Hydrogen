@@ -1,7 +1,5 @@
 package hydrogen.frontend.parser.token;
 
-import hydrogen.Strings;
-import hydrogen.frontend.error.SyntaxError;
 import hydrogen.frontend.parser.ParseUtil;
 import hydrogen.frontend.token.EToken;
 import hydrogen.vcode.VirtualCode;
@@ -27,8 +25,7 @@ public class WhileLoopParser implements ITokenParser
 		vcode.add(new Jump(endLabel, Condition.FALSE));
 		
 		ParseUtil.parseBlock(vcode, EToken.END);
-		if (!vcode.currentToken().is(EToken.END))
-			throw new SyntaxError(Strings.UNEXPECTED_TOKEN_EXPECTED.f(vcode.currentToken().name(), EToken.END.name()));
+		ParseUtil.checkToken(vcode, EToken.END);
 		
 		vcode.add(new Jump(frontLabel, Condition.NONE));
 		vcode.add(new Label(endLabel));

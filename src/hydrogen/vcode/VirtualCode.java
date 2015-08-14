@@ -15,7 +15,7 @@ public class VirtualCode
 {
 	Token currentToken, lastToken;
 	Tokenizer tokenizer;
-	ArrayList<Instruction> vcode;
+	public ArrayList<Instruction> vcode;
 	VariableAllocator valloc;
 	FunctionAllocator falloc;
 	Stack<Token> operators;

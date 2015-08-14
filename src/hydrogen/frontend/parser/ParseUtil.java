@@ -12,8 +12,7 @@ public class ParseUtil
 	{
 		vcode.nextToken();
 		ExpressionParser.parse(vcode);
-		if (!vcode.currentToken().is(EToken.BRACKET_CLOSE))
-			throw new SyntaxError(Strings.UNEXPECTED_TOKEN_EXPECTED.f(vcode.currentToken().name(), EToken.BRACKET_CLOSE.name()));
+		checkToken(vcode, EToken.BRACKET_CLOSE);
 	}
 	
 	public static void parseBlock(VirtualCode vcode, EToken... end)
@@ -23,5 +22,11 @@ public class ParseUtil
 		while(!vcode.currentToken().isOneOf(end))
 			Parser.parseNext(vcode);
 		vcode.valloc().blockClose();
+	}
+	
+	public static void checkToken(VirtualCode vcode, EToken token)
+	{
+		if (!vcode.currentToken().is(token))
+			throw new SyntaxError(Strings.UNEXPECTED_TOKEN_EXPECTED.f(vcode.currentToken().name(), token.name()));
 	}
 }

@@ -41,7 +41,7 @@ public class Tokenizer
 	public Token peekToken()
 	{
 		if (!hasCode())
-			throw new EndOfFileError(Strings.END_OF_FILE.msg);
+			throw new EndOfFileError(Strings.END_OF_FILE.f());
 		
 		EToken[] tokens = EToken.values();
 		Matcher m;

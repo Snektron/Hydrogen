@@ -27,6 +27,6 @@ public class BracketCloseParser implements IExpressionParser
 	@Override
 	public void closeExpression(Token token, VirtualCode vcode)
 	{
-		throw new ParseError(Strings.ERROR.msg);
+		throw new ParseError(Strings.ERROR.f());
 	}
 }

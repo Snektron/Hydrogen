@@ -58,7 +58,7 @@ public class VirtualCode
 	{
 		lastToken = currentToken;
 		if (!hasCode())
-			throw new EndOfFileError(Strings.END_OF_FILE.msg);
+			throw new EndOfFileError(Strings.END_OF_FILE.f());
 		currentToken = tokenizer.nextToken();
 		return currentToken;
 	}

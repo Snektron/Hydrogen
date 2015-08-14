@@ -22,7 +22,7 @@ public enum Strings
 	FUNCTION_INSIDE_FUNCTION("Can't have a function inside another."),
 	RETURN_EXPECTED("Function %s is expected to return a value.");
 	
-	public String msg;
+	String msg;
 	
 	Strings(String msg)
 	{
@@ -31,6 +31,8 @@ public enum Strings
 	
 	public String f(Object... format)
 	{
+		if (format.length == 0)
+			return msg;
 		return String.format(msg, format);
 	}
 }

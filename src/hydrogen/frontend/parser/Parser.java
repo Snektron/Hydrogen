@@ -53,7 +53,7 @@ public class Parser
 	
 	public static void dump(VirtualCode vcode)
 	{
-		Log.d(Strings.PARSER_DUMP.msg);
+		Log.d(Strings.PARSER_DUMP.f());
 		Instruction inst;
 		for (int i = 0; i<vcode.vcode().size(); i++)
 		{

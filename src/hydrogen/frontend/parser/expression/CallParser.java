@@ -30,7 +30,7 @@ public class CallParser implements IExpressionParser
 		
 		Matcher m = Pattern.compile(MatchUtil.NAME).matcher(seq);
 		if (!m.find())
-			throw new ParseError(Strings.ERROR.msg);
+			throw new ParseError(Strings.ERROR.f());
 		String name = m.group();
 		
 		Stack<Token> bOpStack = new Stack<Token>();

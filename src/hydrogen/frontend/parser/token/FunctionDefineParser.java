@@ -27,7 +27,7 @@ public class FunctionDefineParser implements ITokenParser
 	public void parse(VirtualCode vcode)
 	{
 		if (vcode.valloc().inFunction())
-			throw new ParseError(Strings.FUNCTION_INSIDE_FUNCTION.msg);
+			throw new ParseError(Strings.FUNCTION_INSIDE_FUNCTION.f());
 		
 		String lbl = nextLabel(functionID++);
 		vcode.add(new Jump(lbl, Condition.NONE));
@@ -36,7 +36,7 @@ public class FunctionDefineParser implements ITokenParser
 		seq = seq.replaceFirst("function\\s+", "");
 		Matcher m = Pattern.compile(MatchUtil.NAME).matcher(seq);
 		if (!m.find())
-			throw new ParseError(Strings.ERROR.msg);
+			throw new ParseError(Strings.ERROR.f());
 		String name = m.group();
 		
 		vcode.nextToken();
@@ -89,7 +89,7 @@ public class FunctionDefineParser implements ITokenParser
 			if (vcode.currentToken().is(EToken.RETURN_VALUE))
 			{
 				if (returnsValue != null && returnsValue == false)
-					throw new ParseError(Strings.ERROR.msg);
+					throw new ParseError(Strings.ERROR.f());
 				returnsValue = true;
 				vcode.nextToken();
 				ExpressionParser.parse(vcode);
@@ -100,7 +100,7 @@ public class FunctionDefineParser implements ITokenParser
 			}else if(vcode.currentToken().is(EToken.RETURN))
 			{
 				if (returnsValue != null && returnsValue == true)
-					throw new ParseError(Strings.ERROR.msg);
+					throw new ParseError(Strings.ERROR.f());
 				returnsValue = false;
 				vcode.add(new Return(false));
 				vcode.nextToken();

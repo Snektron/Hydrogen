@@ -35,7 +35,7 @@ public class AssignmentParser implements ITokenParser
 		
 		Matcher m = Pattern.compile(MatchUtil.NAME).matcher(seq);
 		if (!m.find())
-			throw new ParseError(Strings.ERROR.msg);
+			throw new ParseError(Strings.ERROR.f());
 		return m.group();
 	}
 }

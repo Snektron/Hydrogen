@@ -12,12 +12,12 @@ public class Hydrogen
 	{		
 		try {
 			Parser.dump(Frontend.pass(file));
-		} catch (IOException e)
-		{
-			e.printStackTrace();
 		} catch (HydrogenError he)
 		{
 			he.logError();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 	
